@@ -1,12 +1,14 @@
 import "./App.css";
-import Map from "./components/map/Map";
+import Map from "./pages/Map";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className='app'>
-      <h1>지도</h1>
-      <Map />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Map />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

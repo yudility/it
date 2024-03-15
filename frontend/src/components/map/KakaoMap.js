@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Map() {
+export default function KakaoMap() {
   const [map, setMap] = useState();
   useEffect(() => {
     const mapScript = document.createElement("script");
@@ -23,7 +23,7 @@ export default function Map() {
     mapScript.addEventListener("load", onLoadKakaoMap);
   }, []);
 
-  // // 지도에 선을 표시한다
+  // 지도에 선을 표시한다
   // var polyline = new window.kakao.maps.Polyline({
   //   map: map, // 선을 표시할 지도 객체
   //   path: [
@@ -43,7 +43,7 @@ export default function Map() {
       id='map'
       style={{
         width: "100%",
-        height: "700px",
+        height: "100vh",
       }}
     ></div>
   );

@@ -82,12 +82,12 @@ export default function Map() {
   return (
     <>
       { mode === 'result' &&
-        <Container>
-          <SearchWrapper style={{position: 'absolute', zIndex: 2, top: 20, alignSelf: 'center', padding: 10}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
+        <Container style={{position: 'absolute', zIndex: 2, alignItems: 'center', width: '100%'}}>
+          <SearchWrapper style={{ padding: 10, backgroundColor: 'white', marginBottom: 10, marginTop: 20}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
             <img src={LocationIcon} alt='현위치' />
             <Placeholder search={true}>출발지: {'이화여자대학교 정문'}</Placeholder>
           </SearchWrapper>
-          <SearchWrapper style={{position: 'absolute', zIndex: 2, top: 70, alignSelf: 'center', padding: 10}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
+          <SearchWrapper style={{ padding: 10, backgroundColor: 'white'}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
             <img src={LocationIcon} alt='현위치' />
             <Placeholder search={true}>도착지: {'이화여자대학교 후문'}</Placeholder>
           </SearchWrapper>
@@ -115,32 +115,22 @@ export default function Map() {
             }
           </Container>
         ) : (
-          mode === 'result' ? (
-            <>
-              <OptionWrapper>
-                <Option>전체</Option>
-                <Option>도보</Option>
-                <Option>셔틀</Option>
-              </OptionWrapper>
-            </>
-          ) : (
-            <Container>
-              <Title>어디로 가시겠어요?</Title>
-              <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
-                <img src={LocationIcon} alt='현위치' />
-                <Placeholder search={!!start}>{start ? start : '출발지'}</Placeholder>
-              </SearchWrapper>
-              <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('도착지'); setMode('onSearch')}}>
-                <img src={LocationIcon} alt='현위치' />
-                <Placeholder search={!!dest}>{dest ? dest : '도착지'}</Placeholder>
-              </SearchWrapper>
-              <SearchWrapper
-                style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#00664F', color: 'white', fontSize: 16, fontWeight: '700'}}
-                onClick={() => {setMode('result')}}>
-                경로 찾기
-              </SearchWrapper>
-            </Container>
-          )
+          <Container>
+            <Title>어디로 가시겠어요?</Title>
+            <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('출발지'); setMode('onSearch')}}>
+              <img src={LocationIcon} alt='현위치' />
+              <Placeholder search={!!start}>{start ? start : '출발지'}</Placeholder>
+            </SearchWrapper>
+            <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('도착지'); setMode('onSearch')}}>
+              <img src={LocationIcon} alt='현위치' />
+              <Placeholder search={!!dest}>{dest ? dest : '도착지'}</Placeholder>
+            </SearchWrapper>
+            <SearchWrapper
+              style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#00664F', color: 'white', fontSize: 16, fontWeight: '700'}}
+              onClick={() => {setMode('result')}}>
+              경로 찾기
+            </SearchWrapper>
+          </Container>
         )}
       </BottomSheet>
     </>

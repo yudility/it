@@ -12,7 +12,7 @@ const BottomSheet = ({ children, mode }: { children: any; mode: string; }) => {
     } else if (mode === 'beforeSearch') {
       setHeight(350);
     } else if (mode === 'result') {
-      setHeight(350);
+      setHeight(680);
     }
   }, [mode]);
 

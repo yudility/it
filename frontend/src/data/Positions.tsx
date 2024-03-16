@@ -5,7 +5,6 @@ export const positions = [
       lat: 37.559716,
       lng: 126.945468,
     },
-    info: '없음'
   },
   {
     title: "대강당",
@@ -21,6 +20,5 @@ export const positions = [
       lat: 37.56353,
       lng: 126.944546,
     },
-    info: '없음'
   },
 ];

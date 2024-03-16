@@ -4,6 +4,10 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   background: grey;
   width: 100%;
+  flex-direction: row;
+  display: flex;
+  position: absolute;
+  z-index: 2;
 `
 
 const SearchInput = styled.input`
@@ -22,13 +26,17 @@ const SearchInput = styled.input`
 
 interface SearchBarProps {
   search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
+  onChangeSearch: any;
 }
 
-export default function SearchBar ({ search, setSearch }: SearchBarProps ) {
+export default function SearchBar ({ search, onChangeSearch }: SearchBarProps ) {
   return (
     <Wrapper>
-      <SearchInput />
+      <SearchInput
+        value={search}
+        onChange={onChangeSearch}
+      />
+      <button>검색</button>
     </Wrapper>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import KakaoMap from "../components/map/KakaoMap";
 import SearchBar from "../components/common/SearchBar";
 
@@ -7,7 +7,7 @@ export default function Map() {
   return (
     <>
       <SearchBar search={search} setSearch={setSearch} />
-      <KakaoMap />
+      <KakaoMap search={search} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 const Locations = () => {
   const [location, setLocation] = useState<{latitude: number; longitude: number} | string>('');

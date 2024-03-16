@@ -111,9 +111,9 @@ export default function KakaoMap({ search }: { search: string }) {
               {info && info.content === marker.content && <div style={{ color: '#000' }}>{marker.content}</div>}
             </MapMarker>
           ))}
-          <BottomSheet>
+          {/* <BottomSheet>
             <span>Content</span>
-          </BottomSheet>
+          </BottomSheet> */}
         </Map>
       )}
     </>

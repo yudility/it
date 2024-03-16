@@ -1,4 +1,4 @@
-package it.demo.route;
+package it.demo.edge;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

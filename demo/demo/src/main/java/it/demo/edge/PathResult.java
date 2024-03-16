@@ -1,5 +1,6 @@
-package it.demo.route;
+package it.demo.edge;
 
+import it.demo.vertex.Vertex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PathResult {
-    List<Route> routeList;
+
+    Vertex start;
+    Vertex end;
+    List<Vertex> VertexList;
     double time;
 }

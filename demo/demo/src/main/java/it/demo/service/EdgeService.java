@@ -1,7 +1,7 @@
 package it.demo.service;
 
-import it.demo.point.Point;
-import it.demo.repository.PointRepository;
+import it.demo.vertex.Vertex;
+import it.demo.repository.VertexRepository;
 import it.demo.repository.RouteRepository;
 import it.demo.route.CustomWeightEdge;
 import it.demo.route.PathResult;
@@ -9,7 +9,6 @@ import it.demo.route.Route;
 import lombok.RequiredArgsConstructor;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.springframework.stereotype.Service;
 
@@ -21,24 +20,24 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RouteService {
 
-    private final PointRepository pointRepository;
+    private final VertexRepository vertexRepository;
     private final RouteRepository routeRepository;
 
-    public PathResult findPath(Point start, Point end) {
-        List<Point> pointList=pointRepository.findAll();
+    public PathResult findPath(Vertex start, Vertex end) {
+        List<Vertex> vertexList=vertexRepository.findAll();
         List<Route> routeList=routeRepository.findAll();
 
         // 그래프 생성
         SimpleDirectedWeightedGraph<String, CustomWeightEdge> graph=new SimpleDirectedWeightedGraph<>( CustomWeightEdge.class );
 
         // 먼저 그래프에 모든 점 추가
-        for (Point point : pointList) {
-            graph.addVertex( point.getName() );
+        for (Vertex Vertex : vertexList) {
+            graph.addVertex( Vertex.getName() );
         }
 
         // 각 Route를 이용하여 그래프에 엣지 추가
         for (Route route : routeList) {
-            CustomWeightEdge edge=graph.addEdge( route.getStartPoint().getName(), route.getTargetPoint().getName() );
+            CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getName(), route.getTargetVertex().getName() );
             edge.setId( route.getId() );
             graph.setEdgeWeight( edge, route.getTimes() );
         }

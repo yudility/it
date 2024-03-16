@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import CheckIcon from '../../assets/Check.svg';
+import CheckIcon from "../../assets/Check.svg";
+import { Building } from "../../pages/Map";
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ const Container = styled.div`
   width: 95%;
   margin-top: 20px;
   margin-horizontal: 20px;
-`
+`;
 
 const TextWrapper = styled.div`
   margin-bottom: 10px;
@@ -18,7 +19,7 @@ const TextWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 95%;
-`
+`;
 
 const ItemText = styled.text`
   display: flex;
@@ -29,35 +30,31 @@ const ItemText = styled.text`
   padding: 10px;
   font-weight: 500;
   font-family: PretendardVariable;
-`
-
-const data = [
-  '이화여자대학교 학생문화관',
-  '이화여자대학교 아산공학관',
-  '이화여자대학교 대강당',
-  '이화여자대학교 포스코관'
-]
+`;
 
 interface SearchListProps {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  places: Building[];
 }
 
-export default function SearchList({ search, setSearch }: SearchListProps) {
+export default function SearchList({
+  search,
+  setSearch,
+  places,
+}: SearchListProps) {
+  console.log('pl', places);
   return (
     <Container>
-    {
-      data.map((item, index) => {
-        return (
-          <TextWrapper key={index} onClick={() => setSearch(item)}>
-            <ItemText>
-              {item}
-            </ItemText>
-            {search === item && <img src={CheckIcon} alt='체크' />}
-          </TextWrapper>
-        )
-      })
-    }
+      {places.length > 1 &&
+        places.map(({building}: any) => {
+          return (
+            <TextWrapper key={building.name} onClick={() => setSearch(building.name)}>
+              <ItemText>{building.name}</ItemText>
+              {search === building.name && <img src={CheckIcon} alt='체크' />}
+            </TextWrapper>
+          );
+        })}
     </Container>
-  )
+  );
 }

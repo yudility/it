@@ -1,18 +1,19 @@
 import useBottomSheet from "../../hooks/useBottomSheet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, SetStateAction, Dispatch } from "react";
 import * as S from "./BottomSheet.style";
 import Header from "./Header";
 
-const BottomSheet = ({ children, mode }: { children: any; mode: string; }) => {
+const BottomSheet = ({ children, mode, setMode }: { children: any; mode: string, setMode: Dispatch<SetStateAction<string>> }) => {
   const { onDragEnd, controls } = useBottomSheet();
   const [height, setHeight] = useState<number>(350);
   useEffect(() => {
-    if (mode === 'onSearch') {
+    if (height === 350 && mode === "toCurrent") setMode("beforeSearch");
+    if (mode === "onSearch") {
       setHeight(0);
-    } else if (mode === 'beforeSearch') {
+    } else if (mode === "beforeSearch" || mode === "toCurrent") {
       setHeight(350);
-    } else if (mode === 'result') {
-      setHeight(680);
+    } else if (mode === "result") {
+      setHeight(580);
     }
   }, [mode]);
 
@@ -26,13 +27,13 @@ const BottomSheet = ({ children, mode }: { children: any; mode: string; }) => {
         stiffness: 400,
       },
     });
-  }, [height, controls]);
+  }, [mode, height, controls]);
 
   return (
     <S.Wrapper
       drag='y'
       onDragEnd={onDragEnd}
-      initial='hidden'
+      initial='visible'
       animate={controls}
       transition={{
         type: "spring",

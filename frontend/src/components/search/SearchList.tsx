@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
-import CheckIcon from '../../assets/Check.svg';
+import CheckIcon from "../../assets/Check.svg";
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 95%;
   margin-top: 20px;
   margin-horizontal: 20px;
-`
+`;
 
 const TextWrapper = styled.div`
   margin-bottom: 10px;
@@ -18,7 +18,7 @@ const TextWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 95%;
-`
+`;
 
 const ItemText = styled.text`
   display: flex;
@@ -29,14 +29,14 @@ const ItemText = styled.text`
   padding: 10px;
   font-weight: 500;
   font-family: PretendardVariable;
-`
+`;
 
 const data = [
-  '이화여자대학교 학생문화관',
-  '이화여자대학교 아산공학관',
-  '이화여자대학교 대강당',
-  '이화여자대학교 포스코관'
-]
+  "이화여자대학교 학생문화관",
+  "이화여자대학교 아산공학관",
+  "이화여자대학교 대강당",
+  "이화여자대학교 포스코관",
+];
 
 interface SearchListProps {
   search: string;
@@ -46,18 +46,14 @@ interface SearchListProps {
 export default function SearchList({ search, setSearch }: SearchListProps) {
   return (
     <Container>
-    {
-      data.map((item, index) => {
+      {data.map((item, index) => {
         return (
           <TextWrapper key={index} onClick={() => setSearch(item)}>
-            <ItemText>
-              {item}
-            </ItemText>
+            <ItemText>{item}</ItemText>
             {search === item && <img src={CheckIcon} alt='체크' />}
           </TextWrapper>
-        )
-      })
-    }
+        );
+      })}
     </Container>
-  )
+  );
 }

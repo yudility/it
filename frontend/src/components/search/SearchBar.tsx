@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import CancelIcon from '../../assets/Cancel.svg';
+import CancelIcon from "../../assets/Cancel.svg";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
   gap: 10px;
   border-radius: 12px;
-  background: #F8F8F8;
+  background: #f8f8f8;
 `;
 
 const SearchInput = styled.input`
@@ -33,7 +33,7 @@ const IconButton = styled.img`
   position: absolute;
   top: 135px;
   z-index: 10;
-`
+`;
 
 interface SearchBarProps {
   search: string;
@@ -41,11 +41,26 @@ interface SearchBarProps {
   onChangeSearch: any;
 }
 
-export default function SearchBar({ search, setSearch, onChangeSearch }: SearchBarProps) {
+export default function SearchBar({
+  search,
+  setSearch,
+  onChangeSearch,
+}: SearchBarProps) {
   return (
     <Wrapper>
-      <SearchInput value={search} onChange={onChangeSearch} placeholder='장소를 검색하세요' />
-      <IconButton style={{right: 50}} src={CancelIcon} alt='취소' onClick={() => setSearch('')} />
+      <SearchInput
+        value={search}
+        onChange={onChangeSearch}
+        placeholder='장소를 검색하세요'
+      />
+      {search.length > 0 && (
+        <IconButton
+          style={{ right: 50 }}
+          src={CancelIcon}
+          alt='취소'
+          onClick={() => setSearch("")}
+        />
+      )}
     </Wrapper>
   );
 }

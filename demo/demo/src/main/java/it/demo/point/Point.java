@@ -15,11 +15,11 @@ public class Point {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
 
-    public String name;
-    public double latitude;
-    public double longitude;
+    private String name;
+    private double latitude;
+    private double longitude;
 
 
 }

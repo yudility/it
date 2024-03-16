@@ -1,20 +1,34 @@
 package it.demo.route;
 
 import it.demo.point.Point;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Entity
+@Getter
+@Setter
 public class Route {
-    public Point start;
-    public Point destination;
 
-    public int times;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    public String vectors; // 배열로 받아야 됨 (HOW?)
-    public int priority;
+    @ManyToOne(cascade=CascadeType.REMOVE)
+    @JoinColumn(name="start_point_id")
+    private Point startPoint;
+    //public Long startPointId;
 
-    public Route(Point start, Point destination) {
-        this.start = start;
-        this.destination = destination;
-    }
+    @ManyToOne(cascade=CascadeType.REMOVE)
+    @JoinColumn(name="target_point_id")
+    private Point targetPoint;
+    //public Long targetPointId;
+
+    private int times;
+
+    private String vectors; // 배열로 받아야 됨 (HOW?)
+
+    private boolean isUphill;
 
 
 }

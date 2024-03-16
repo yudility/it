@@ -2,10 +2,10 @@ package it.demo.service;
 
 import it.demo.vertex.Vertex;
 import it.demo.repository.VertexRepository;
-import it.demo.repository.RouteRepository;
-import it.demo.route.CustomWeightEdge;
-import it.demo.route.PathResult;
-import it.demo.route.Route;
+import it.demo.repository.EdgeRepository;
+import it.demo.edge.CustomWeightEdge;
+import it.demo.edge.PathResult;
+import it.demo.edge.Edge;
 import lombok.RequiredArgsConstructor;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -18,49 +18,45 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class RouteService {
+public class EdgeService {
 
     private final VertexRepository vertexRepository;
-    private final RouteRepository routeRepository;
+    private final EdgeRepository edgeRepository;
 
     public PathResult findPath(Vertex start, Vertex end) {
         List<Vertex> vertexList=vertexRepository.findAll();
-        List<Route> routeList=routeRepository.findAll();
+        List<Edge> edgeList=edgeRepository.findAll();
 
         // 그래프 생성
-        SimpleDirectedWeightedGraph<String, CustomWeightEdge> graph=new SimpleDirectedWeightedGraph<>( CustomWeightEdge.class );
+        SimpleDirectedWeightedGraph<Long, CustomWeightEdge> graph=new SimpleDirectedWeightedGraph<>( CustomWeightEdge.class );
 
         // 먼저 그래프에 모든 점 추가
         for (Vertex Vertex : vertexList) {
-            graph.addVertex( Vertex.getName() );
+            graph.addVertex( Vertex.getId() );
         }
 
-        // 각 Route를 이용하여 그래프에 엣지 추가
-        for (Route route : routeList) {
-            CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getName(), route.getTargetVertex().getName() );
+        // DB에 있는 Edge data로 그래프에 엣지 추가
+        for (Edge route : edgeList) {
+            CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getId(), route.getTargetVertex().getId() );
             edge.setId( route.getId() );
-            graph.setEdgeWeight( edge, route.getTimes() );
+            graph.setEdgeWeight( edge, route.getDistance() );
         }
 
+        DijkstraShortestPath<Long, CustomWeightEdge> shortestPath=new DijkstraShortestPath<>( graph );
 
-        DijkstraShortestPath<String, CustomWeightEdge> shortestPath=new DijkstraShortestPath<>( graph );
-
-
-        String sourceVertexName=start.getName();
-        String targetVertexName=end.getName();
 
         // 최단 경로 계산
-        GraphPath<String, CustomWeightEdge> path = shortestPath.getPath(sourceVertexName, targetVertexName);
+        GraphPath<Long, CustomWeightEdge> path = shortestPath.getPath(start.getId(), end.getId());
 
-        List<CustomWeightEdge> edgeList = path.getEdgeList();
-        List<Route> routes = new ArrayList<>();
-        for (CustomWeightEdge edge : edgeList) {
-            Optional<Route> optionalRoute = routeRepository.findById(edge.getId());
-            optionalRoute.ifPresent(routes::add);
+        List<Long> resultVertexList = path.getVertexList();
+        List<Vertex> vertices= new ArrayList<>();
+       for (Long vertexId : resultVertexList) {
+            Optional<Vertex> optionalVertex = vertexRepository.findById(vertexId);
+           optionalVertex.ifPresent( vertices::add);
             // or you can use optionalRoute.ifPresent(route -> routes.add(route));
         }
 
-        PathResult pathResult=new PathResult( routes, path.getWeight() );
+        PathResult pathResult=new PathResult( start, end, vertices, path.getWeight() );
 
         return pathResult;
 

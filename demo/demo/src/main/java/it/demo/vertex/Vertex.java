@@ -1,30 +1,29 @@
-package it.demo.point;
+package it.demo.vertex;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import it.demo.building.Building;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
 @Setter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
-//@Builder
-//@Data
-public class Point {
+public class Vertex {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String name;
     private double latitude;
     private double longitude;
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name ="building_id")
+    private Building building;
 
-    public Point(String name) {
-        this.name=name;
+    public String getIdAsString() {
+        return String.valueOf(id);
     }
+
 }

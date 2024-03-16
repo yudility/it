@@ -5,12 +5,12 @@ import Header from "./Header";
 
 const BottomSheet = ({ children, searchMode }: any) => {
   const { onDragEnd, controls } = useBottomSheet();
-  const [height, setHeight] = useState<number>(400);
+  const [height, setHeight] = useState<number>(350);
   useEffect(() => {
     if (searchMode) {
       setHeight(0);
     } else {
-      setHeight(400);
+      setHeight(350);
     }
   }, [searchMode]);
 

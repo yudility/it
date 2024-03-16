@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef, MutableRefObject } from "react";
 import Locations from "./Locations";
 import { positions } from "../../data/Positions";
 import useKakaoLoader from "./useKakaoLoader";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import BottomSheet from "../bottomsheet/BottomSheet";
+import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 
 interface marker {
   position: {
@@ -28,36 +27,6 @@ export default function KakaoMap({ search }: { search: string }) {
     },
   ]);
 
-  // 검색
-  useEffect(() => {
-    if (!map || !search) return;
-    console.log("search", search);
-    const ps = new kakao.maps.services.Places();
-    ps.keywordSearch(search, (data, status, _pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
-        // console.log(data);
-        const bounds = new kakao.maps.LatLngBounds();
-        let markers = [];
-
-        for (var i = 0; i < data.length; i++) {
-          markers.push({
-            position: {
-              lat: parseInt(data[i].y),
-              lng: parseInt(data[i].x),
-            },
-            content: data[i].place_name,
-          });
-          bounds.extend(
-            new kakao.maps.LatLng(parseInt(data[i].y), parseInt(data[i].x))
-          );
-        }
-        setMarkers(markers);
-        map.setBounds(bounds);
-      }
-    });
-    console.log(markers)
-  }, [search, map]);
-
   return (
     <>
       {typeof location != "string" && (
@@ -80,7 +49,20 @@ export default function KakaoMap({ search }: { search: string }) {
               lng: location.longitude,
             }}
           />
-          {positions.map((position, index) => (
+          {/* <Polyline
+            path={[
+              [
+                { lat: 33.452344169439975, lng: 126.56878163224233 },
+                { lat: 33.452739313807456, lng: 126.5709308145358 },
+                { lat: 33.45178067090639, lng: 126.572688693875 },
+              ],
+            ]}
+            strokeWeight={5} // 선의 두께 입니다
+            strokeColor={"#FFAE00"} // 선의 색깔입니다
+            strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+            strokeStyle={"solid"} // 선의 스타일입니다
+          /> */}
+          {/* {positions.map((position, index) => (
             <MapMarker
               key={`${position.title}-${position.latlng}`}
               position={position.latlng} // 마커를 표시할 위치
@@ -93,8 +75,8 @@ export default function KakaoMap({ search }: { search: string }) {
               }}
               title={position.title} // 마우스 올리면 표시
             />
-          ))}
-          {markers && markers.map((marker: any) => (
+          ))} */}
+          {/* {markers && markers.map((marker: any) => (
             <MapMarker
               key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
               position={marker.position}
@@ -110,10 +92,7 @@ export default function KakaoMap({ search }: { search: string }) {
             >
               {info && info.content === marker.content && <div style={{ color: '#000' }}>{marker.content}</div>}
             </MapMarker>
-          ))}
-          {/* <BottomSheet>
-            <span>Content</span>
-          </BottomSheet> */}
+          ))} */}
         </Map>
       )}
     </>

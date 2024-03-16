@@ -5,6 +5,7 @@ import BottomSheet from "../components/bottomsheet/BottomSheet";
 import styled from "styled-components";
 import LocationIcon from '../assets/Location.svg';
 import CloseIcon from '../assets/Close.svg';
+import SearchList from "../components/search/SearchList";
 
 const Container = styled.div`
   display: flex;
@@ -38,8 +39,8 @@ const SearchWrapper = styled.button`
   margin-vertical: 10px;
 `
 
-const Placeholder = styled.text`
-  color: #B4B4B4;
+const Placeholder = styled.text<{ search: boolean }>`
+  color: ${props => props.search ? `black` :`#B4B4B4`};
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -56,6 +57,8 @@ export default function Map() {
   };
   const [searchMode, setSearchMode] = useState<boolean>(false);
   const [title, setTitle] = useState<string>('');
+  const [start, setStart] = useState<string>('');
+  const [dest, setDest] = useState<string>('');
 
   return (
     <>
@@ -64,19 +67,36 @@ export default function Map() {
         { searchMode ? (
           <Container>
             <Title>{title} 검색</Title>
-            <img onClick={() => setSearchMode(false)} style={{position: 'absolute', right: 30}} src={CloseIcon} alt='닫기' />
-            <SearchBar search={search} onChangeSearch={onChangeSearch} />
+            <img onClick={() => {setSearchMode(false); setSearch('')}} style={{position: 'absolute', right: 30}} src={CloseIcon} alt='닫기' />
+            <SearchBar search={search} setSearch={setSearch} onChangeSearch={onChangeSearch} />
+            {
+              search.length > 0 && (
+                <>
+                  <SearchList search={search} setSearch={setSearch} />
+                  <SearchWrapper
+                    style={{position: 'absolute', top: 630, alignItems: 'center', justifyContent: 'center', backgroundColor: '#00664F', color: 'white', fontSize: 16, fontWeight: '700'}}
+                    onClick={() => {title === '출발지' ? (setStart(search)) : (setDest(search)); setSearch(''); setSearchMode(false)}}>
+                    {title}로 설정
+                  </SearchWrapper>
+                </>
+              )
+            }
           </Container>
         ) : (
           <Container>
             <Title>어디로 가시겠어요?</Title>
             <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('출발지'); setSearchMode(true)}}>
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder>출발지</Placeholder>
+              <Placeholder search={!!start}>{start ? start : '출발지'}</Placeholder>
             </SearchWrapper>
-            <SearchWrapper onClick={() => {setTitle('도착지'); setSearchMode(true)}}>
+            <SearchWrapper style={{marginBottom: 20}} onClick={() => {setTitle('도착지'); setSearchMode(true)}}>
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder>도착지</Placeholder>
+              <Placeholder search={!!dest}>{dest ? dest : '도착지'}</Placeholder>
+            </SearchWrapper>
+            <SearchWrapper
+              style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#00664F', color: 'white', fontSize: 16, fontWeight: '700'}}
+              onClick={() => {/*경로 찾기 요청 함수*/}}>
+              경로 찾기
             </SearchWrapper>
           </Container>
         )}

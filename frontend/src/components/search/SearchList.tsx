@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import CheckIcon from "../../assets/Check.svg";
-import { Place } from "../../pages/Map";
+import { Building } from "../../pages/Map";
 
 const Container = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const ItemText = styled.text`
 interface SearchListProps {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
-  places: Place[];
+  places: Building[];
 }
 
 export default function SearchList({
@@ -43,13 +43,13 @@ export default function SearchList({
   setSearch,
   places,
 }: SearchListProps) {
-  console.log(places);
+  console.log('pl', places);
   return (
     <Container>
-      {places.length > 0 &&
-        places.map(({ id, building }: any) => {
+      {places.length > 1 &&
+        places.map(({building}: any) => {
           return (
-            <TextWrapper key={id} onClick={() => setSearch(building.name)}>
+            <TextWrapper key={building.name} onClick={() => setSearch(building.name)}>
               <ItemText>{building.name}</ItemText>
               {search === building.name && <img src={CheckIcon} alt='체크' />}
             </TextWrapper>

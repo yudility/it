@@ -19,7 +19,7 @@ import CurrentIcon from "../../assets/Current.svg";
 import MarkerIcon from "../../assets/Marker.svg";
 import { Route } from "../../pages/Map";
 
-export default function KakaoMap({ mode, result, toCurrent }: { mode: string; result: Route ; toCurrent: boolean; }) {
+export default function KakaoMap({ mode, result }: { mode: string; result: Route; }) {
   useKakaoLoader();
   const location: any = Locations();
   const path: { lat: number; lng: number }[] = result.vertexList.map((vertex) => ({
@@ -31,8 +31,10 @@ export default function KakaoMap({ mode, result, toCurrent }: { mode: string; re
   useEffect(() => {
     if (mode === "result") {
       resetBounds(path);
+    } else if (mode === "toCurrent") {
+      map!.setCenter(new kakao.maps.LatLng(location.latitude, location.longitude));
     }
-  }, [mode]);
+  }, [mode, map]);
 
   const resetBounds = (data: any) => {
     const bounds = new kakao.maps.LatLngBounds();

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-import { BOTTOM_SHEET_HEIGHT } from "../../constants/Constants";
+import { WINDOW_HEIGHT } from "../../constants/Constants";
 
 const Wrapper = styled(motion.div)`
   flex-direction: column;
@@ -14,8 +14,6 @@ const Wrapper = styled(motion.div)`
   border-top-right-radius: 24px;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
-  height: ${BOTTOM_SHEET_HEIGHT}px;
-
   margin: 0 auto;
 
   overflow: auto;

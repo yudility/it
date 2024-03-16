@@ -7,9 +7,10 @@ import LocationIcon from "../assets/Location.svg";
 import CloseIcon from "../assets/Close.svg";
 import ResetIcon from "../assets/Reset.svg";
 import SearchList from "../components/search/SearchList";
-import ToCurrentIcon from "../assets/ToCurrent.svg";
-import WalkIcon from '../assets/Walk.svg';
+import WalkIcon from "../assets/Walk.svg";
+import LogoIcon from "../assets/Logo.svg";
 import Request from "../services/requests";
+import { WINDOW_WIDTH } from "../constants/Constants";
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +44,12 @@ const SearchWrapper = styled.button`
   border-color: transparent;
   margin-vertical: 10px;
   font-family: PretendardVariable;
+  &:hover {
+    background-color: skyblue;
+    color: blue;
+  }
+  cursor: pointer;
+  transition: all 0.3s;
 `;
 
 const Placeholder = styled.text<{ search: boolean }>`
@@ -56,39 +63,28 @@ const Placeholder = styled.text<{ search: boolean }>`
   font-family: PretendardVariable;
 `;
 
-export interface Place {
-  id: number;
-  building: {
-    name: string;
-  };
+export interface Building {
+  name: string;
+  info: string | null;
 }
 
 export interface Route {
   start: {
     latitude: number;
     longitude: number;
-    building: {
-      name: string;
-      info: string | null;
-    };
+    building: Building;
   };
   end: {
     latitude: number;
     longitude: number;
-    building: {
-      name: string;
-      info: string | null;
-    };
+    building: Building;
   };
   time: number;
   vertexList: [
     {
       latitude: number;
       longitude: number;
-      building: {
-        name: string;
-        info: string | null;
-      };
+      building: Building;
     }
   ];
 }
@@ -104,13 +100,10 @@ export default function Map() {
   const [title, setTitle] = useState<string>("");
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
-  const [toCurrent, setToCurrent] = useState<boolean>(false);
-  const [places, setPlaces] = useState<Place[]>([
+  const [places, setPlaces] = useState<Building[]>([
     {
-      id: 0,
-      building: {
-        name: "",
-      },
+      name: "",
+      info: null,
     },
   ]);
   const [result, setResult] = useState<Route>({
@@ -169,15 +162,22 @@ export default function Map() {
 
   return (
     <>
-      <img
-        src={ToCurrentIcon}
-        alt='현위치로'
-        style={{ position: "absolute", zIndex: 2, bottom: 30, right: 30 }}
-        onClick={() => {
-          setToCurrent(true);
-          setMode("beforeSearch");
+      <Container
+        style={{
+          backgroundColor: "#00664F",
+          paddingTop: 10,
+          paddingBottom: 10,
         }}
-      />
+      >
+        <img
+          src={LogoIcon}
+          alt='로고'
+          style={{ height: 40, alignSelf: "center" }}
+          onClick={() => {
+            setMode("toCurrent");
+          }}
+        />
+      </Container>
       {mode === "result" && (
         <Container
           style={{
@@ -231,8 +231,8 @@ export default function Map() {
           />
         </Container>
       )}
-      <KakaoMap mode={mode} result={result} toCurrent={toCurrent} />
-      <BottomSheet mode={mode}>
+      <KakaoMap mode={mode} result={result} />
+      <BottomSheet mode={mode} setMode={setMode}>
         {mode === "onSearch" ? (
           <Container>
             <Title>{title} 검색</Title>
@@ -289,8 +289,14 @@ export default function Map() {
             }}
           >
             <Title>소요 시간</Title>
-            <Title style={{ fontSize: 20, marginLeft: 15 }}>도보 {result.time}분</Title>
-            <img src={WalkIcon} alt='걷기' style={{marginBottom: 23, marginLeft: 5}} />
+            <Title style={{ fontSize: 20, marginLeft: 15 }}>
+              도보 {result.time}분
+            </Title>
+            <img
+              src={WalkIcon}
+              alt='걷기'
+              style={{ marginBottom: 23, marginLeft: 5 }}
+            />
           </Container>
         ) : (
           <Container>

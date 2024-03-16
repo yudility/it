@@ -1,4 +1,5 @@
 // 세로 길이
-const BOTTOM_SHEET_HEIGHT = window.innerHeight;
+const WINDOW_HEIGHT = window.innerHeight;
+const WINDOW_WIDTH = window.innerWidth;
 
-export { BOTTOM_SHEET_HEIGHT };
+export { WINDOW_WIDTH, WINDOW_HEIGHT };

@@ -1,10 +1,10 @@
-package it.demo.vertex;
+package it.demo.controller;
 
 import it.demo.building.Building;
-import it.demo.building.Location;
 import it.demo.repository.BuildingRepository;
 import it.demo.repository.VertexRepository;
 import it.demo.service.EdgeService;
+import it.demo.vertex.Vertex;
 import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

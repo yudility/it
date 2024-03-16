@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Path {
-    List<CustomWeightEdge> edgeList ;
+public class PathResult {
+    List<Route> routeList;
     double time;
 }

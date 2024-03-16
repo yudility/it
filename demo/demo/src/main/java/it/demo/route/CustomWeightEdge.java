@@ -11,6 +11,6 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomEdge extends DefaultWeightedEdge {
+public class CustomWeightEdge extends DefaultWeightedEdge {
     private Long id;
 }

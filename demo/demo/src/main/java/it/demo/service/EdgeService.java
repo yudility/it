@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.graph.WeightedMultigraph;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class EdgeService {
         List<Edge> edgeList=edgeRepository.findAll();
 
         // 그래프 생성
-        SimpleDirectedWeightedGraph<Long, CustomWeightEdge> graph=new SimpleDirectedWeightedGraph<>( CustomWeightEdge.class );
+        WeightedMultigraph<Long, CustomWeightEdge> graph=new WeightedMultigraph<>( CustomWeightEdge.class );
 
         // 먼저 그래프에 모든 점 추가
         for (Vertex Vertex : vertexList) {
@@ -39,7 +40,14 @@ public class EdgeService {
         for (Edge route : edgeList) {
             CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getId(), route.getTargetVertex().getId() );
             edge.setId( route.getId() );
-            graph.setEdgeWeight( edge, route.getDistance() );
+            double time= route.getDistance() / route.getSpeed();
+
+            graph.setEdgeWeight( edge,  time);
+            //todo
+            //가중치를 어떻게 둘것인가
+            //시간?
+            //todo
+            //오르막 패널티반영 어떻게 할 것인가
         }
 
         DijkstraShortestPath<Long, CustomWeightEdge> shortestPath=new DijkstraShortestPath<>( graph );

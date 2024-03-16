@@ -6,9 +6,13 @@ import it.demo.vertex.Vertex;
 import it.demo.repository.VertexRepository;
 import it.demo.service.EdgeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,17 +36,40 @@ public class EdgeController {
 
         return route;
     }*/
-    @GetMapping("edge/find")
+/*    @GetMapping("edge/find")
     public PathResult findShortestPath(@RequestParam("start") String startName, @RequestParam("end") String destinationName){
 
-        Vertex start = buildingRepository.findVerticesByBuildingName( startName ).getFirst();
-        Vertex end = buildingRepository.findVerticesByBuildingName( destinationName ).getFirst();
+        Optional<Vertex> start =Optional.ofNullable( buildingRepository.findVerticesByBuildingName( startName ).getFirst() );
+        Optional<Vertex> end = Optional.ofNullable( buildingRepository.findVerticesByBuildingName( destinationName ).getFirst() );
 
-        PathResult pathResult = edgeService.findPath( start, end );
+        if(start.isPresent() && end.isPresent()){
+            PathResult pathResult = edgeService.findPath( start, end );
 
-        return pathResult;
+            return pathResult;
+        }
+        else {
+            예외처리
+        }
 
+    }*/
+    @GetMapping("edge/find")
+    public ResponseEntity<PathResult> findShortestPath(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
+        List<Vertex> startVertices=buildingRepository.findVerticesByBuildingName( startName );
+        List<Vertex> endVertices=buildingRepository.findVerticesByBuildingName( destinationName );
+
+        if (startVertices != null && !startVertices.isEmpty() && endVertices != null && !endVertices.isEmpty()) {
+            Optional<Vertex> start=Optional.ofNullable( startVertices.getFirst() );
+            Optional<Vertex> end=Optional.ofNullable( endVertices.getFirst() );
+
+            if (start.isPresent() && end.isPresent()) {
+                PathResult pathResult=edgeService.findPath( start.get(), end.get() );
+                return ResponseEntity.ok( pathResult );
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 
 }

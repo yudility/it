@@ -5,11 +5,14 @@ import it.demo.repository.PointRepository;
 import it.demo.service.RouteService;
 import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +24,7 @@ public class PointController extends HttpServlet {
     private final RouteService routeService;
 
     @GetMapping("hi-api")
-    public Point findPointByNameTest(@RequestParam("testing") String testing){
+    public Point findPointByNameLikeTest(@RequestParam("testing") String testing){
 
         Point point = new Point();
         point.setId(1L);
@@ -45,10 +48,19 @@ public class PointController extends HttpServlet {
         return "saved";
     }
 
-    @GetMapping("find_point")
-    public List<Point> findPointByName(@RequestParam("name") String name){
-        List<Point> point = pointRepository.findByName(name); //여러개일수도있음...!
-        return point;
+    @GetMapping("point/find")
+    public ResponseEntity<Object> findPointByName(@RequestParam("name") String name) {
+        List<Point> points = pointRepository.findByNameContaining(name);
+        if (points == null) {
+            return ResponseEntity.status( HttpStatus.NOT_FOUND).body("No points found for the given name");
+        }
+
+        List<String> pointNames = new ArrayList<>();
+        for (Point point : points) {
+            pointNames.add(point.getName());
+        }
+
+        return ResponseEntity.ok(pointNames);
     }
 //    @GetMapping("find_route")
 //    @ResponseBody

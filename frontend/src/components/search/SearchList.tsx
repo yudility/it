@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import CheckIcon from "../../assets/Check.svg";
 import { Place } from "../../pages/Map";
@@ -38,18 +38,23 @@ interface SearchListProps {
   places: Place[];
 }
 
-export default function SearchList({ search, setSearch, places }: SearchListProps) {
-  console.log(places)
+export default function SearchList({
+  search,
+  setSearch,
+  places,
+}: SearchListProps) {
+  console.log(places);
   return (
     <Container>
-      {places.length > 0 && places.map(({id, building}: any) => {
-        return (
-          <TextWrapper key={id} onClick={() => setSearch(building.name)}>
-            <ItemText>{building.name}</ItemText>
-            {search === building.name && <img src={CheckIcon} alt='체크' />}
-          </TextWrapper>
-        );
-      })}
+      {places.length > 0 &&
+        places.map(({ id, building }: any) => {
+          return (
+            <TextWrapper key={id} onClick={() => setSearch(building.name)}>
+              <ItemText>{building.name}</ItemText>
+              {search === building.name && <img src={CheckIcon} alt='체크' />}
+            </TextWrapper>
+          );
+        })}
     </Container>
   );
 }

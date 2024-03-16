@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import Locations from "./Locations";
 import styled from "styled-components";
-import { positions } from "../../data/Positions";
 import useKakaoLoader from "./useKakaoLoader";
 import {
   Map,
@@ -75,55 +74,57 @@ export default function KakaoMap({ mode, result, toCurrent }: { mode: string; re
               },
             }}
           />
-          <Polyline
-            path={path}
-            strokeWeight={5} // 선의 두께 입니다
-            strokeColor={"#00664F"} // 선의 색깔입니다
-            strokeStyle={"solid"} // 선의 스타일입니다
-          />
-          {result.vertexList.map((vertex, index) => {
-            return (
-              <>
-                <MapMarker
-                  key={index}
-                  position={{
-                    lat: vertex.latitude,
-                    lng: vertex.longitude
-                  }} // 마커를 표시할 위치
-                  image={{
-                    src: MarkerIcon,
-                    size: {
-                      width: 24,
-                      height: 35,
-                    },
-                  }}
-                />
-                {vertex.building.info && (
-                  <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+          { result && <>
+            <Polyline
+              path={path}
+              strokeWeight={5} // 선의 두께 입니다
+              strokeColor={"#00664F"} // 선의 색깔입니다
+              strokeStyle={"solid"} // 선의 스타일입니다
+            />
+            {result.vertexList.map((vertex, index) => {
+              return (
+                <>
+                  <MapMarker
+                    key={index}
                     position={{
                       lat: vertex.latitude,
                       lng: vertex.longitude
+                    }} // 마커를 표시할 위치
+                    image={{
+                      src: MarkerIcon,
+                      size: {
+                        width: 24,
+                        height: 35,
+                      },
                     }}
-                  >
-                    <div
-                      className='label'
-                      style={{
-                        fontFamily: "PretendardVariable",
-                        backgroundColor: "white",
-                        padding: 5,
-                        borderRadius: 8,
-                        opacity: 0.9,
+                  />
+                  {vertex.building.info && (
+                    <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+                      position={{
+                        lat: vertex.latitude,
+                        lng: vertex.longitude
                       }}
                     >
-                      <span className='left'></span>
-                      <span className='center'>{vertex.building.info}</span>
-                      <span className='right'></span>
-                    </div>
-                  </CustomOverlayMap>
-                )}
-              </>
-            );
-          })}
+                      <div
+                        className='label'
+                        style={{
+                          fontFamily: "PretendardVariable",
+                          backgroundColor: "white",
+                          padding: 5,
+                          borderRadius: 8,
+                          opacity: 0.9,
+                        }}
+                      >
+                        <span className='left'></span>
+                        <span className='center'>{vertex.building.info}</span>
+                        <span className='right'></span>
+                      </div>
+                    </CustomOverlayMap>
+                  )}
+                </>
+              );
+            })}
+          </>}
         </Map>
       )}
     </>

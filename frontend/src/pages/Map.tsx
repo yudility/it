@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import KakaoMap from "../components/map/KakaoMap";
 import SearchBar from "../components/search/SearchBar";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
@@ -7,8 +7,8 @@ import LocationIcon from "../assets/Location.svg";
 import CloseIcon from "../assets/Close.svg";
 import ResetIcon from "../assets/Reset.svg";
 import SearchList from "../components/search/SearchList";
-import ToCurrentIcon from '../assets/ToCurrent.svg';
-import axios from "axios";
+import ToCurrentIcon from "../assets/ToCurrent.svg";
+import WalkIcon from '../assets/Walk.svg';
 import Request from "../services/requests";
 
 const Container = styled.div`
@@ -60,7 +60,7 @@ export interface Place {
   id: number;
   building: {
     name: string;
-  }
+  };
 }
 
 export interface Route {
@@ -70,17 +70,17 @@ export interface Route {
     building: {
       name: string;
       info: string | null;
-    }
-  },
+    };
+  };
   end: {
     latitude: number;
     longitude: number;
     building: {
       name: string;
       info: string | null;
-    }
-  },
-  time: number,
+    };
+  };
+  time: number;
   vertexList: [
     {
       latitude: number;
@@ -88,9 +88,9 @@ export interface Route {
       building: {
         name: string;
         info: string | null;
-      }
+      };
     }
-  ]
+  ];
 }
 
 export default function Map() {
@@ -105,28 +105,30 @@ export default function Map() {
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const [toCurrent, setToCurrent] = useState<boolean>(false);
-  const [places, setPlaces] = useState<Place[]>([{
-    id: 0,
-    building: {
-      name: ''
-    }
-  }]);
+  const [places, setPlaces] = useState<Place[]>([
+    {
+      id: 0,
+      building: {
+        name: "",
+      },
+    },
+  ]);
   const [result, setResult] = useState<Route>({
     start: {
       latitude: 0,
       longitude: 0,
       building: {
-        name: '',
-        info: null
-      }
+        name: "",
+        info: null,
+      },
     },
     end: {
       latitude: 0,
       longitude: 0,
       building: {
-        name: '',
-        info: null
-      }
+        name: "",
+        info: null,
+      },
     },
     time: 0,
     vertexList: [
@@ -134,36 +136,48 @@ export default function Map() {
         latitude: 0,
         longitude: 0,
         building: {
-          name: '',
-          info: null
-        }
-      }
-    ]
+          name: "",
+          info: null,
+        },
+      },
+    ],
   });
 
   const searchByName = async () => {
-    const response = await request.get('point/find', {
-      name: search
+    const response = await request.get("point/find", {
+      name: search,
     });
     setPlaces(response.data);
-  }
+  };
 
   useEffect(() => {
-    if(search.length > 0) searchByName();
-  }, [search])
+    if (search.length > 0) searchByName();
+  }, [search]);
 
   const findRoute = async () => {
-    const response = await request.get('route/find', {
-      start: start,
-      end: end
-    });
-    setMode('result');
-    setResult(response.data);
-  }
+    if (start && end) {
+      const response = await request.get("route/find", {
+        start: start,
+        end: end,
+      });
+      setMode("result");
+      setResult(response.data);
+    } else {
+      alert("출발지와 도착지를 모두 설정해주세요!");
+    }
+  };
 
   return (
     <>
-      <img src={ToCurrentIcon} alt='현위치로' style={{position: 'absolute', zIndex: 2, bottom: 30, right: 30}} onClick={() => {setToCurrent(true); setMode('beforeSearch')}} />
+      <img
+        src={ToCurrentIcon}
+        alt='현위치로'
+        style={{ position: "absolute", zIndex: 2, bottom: 30, right: 30 }}
+        onClick={() => {
+          setToCurrent(true);
+          setMode("beforeSearch");
+        }}
+      />
       {mode === "result" && (
         <Container
           style={{
@@ -191,9 +205,7 @@ export default function Map() {
               }}
             >
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder search={true}>
-                출발지: {start}
-              </Placeholder>
+              <Placeholder search={true}>출발지: {start}</Placeholder>
             </SearchWrapper>
             <SearchWrapper
               style={{ padding: 10, backgroundColor: "white" }}
@@ -203,9 +215,7 @@ export default function Map() {
               }}
             >
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder search={true}>
-                도착지: {end}
-              </Placeholder>
+              <Placeholder search={true}>도착지: {end}</Placeholder>
             </SearchWrapper>
           </div>
           <img
@@ -242,7 +252,11 @@ export default function Map() {
             />
             {search.length > 0 && (
               <>
-                <SearchList search={search} setSearch={setSearch} places={places} />
+                <SearchList
+                  search={search}
+                  setSearch={setSearch}
+                  places={places}
+                />
                 <SearchWrapper
                   style={{
                     position: "absolute",
@@ -264,6 +278,19 @@ export default function Map() {
                 </SearchWrapper>
               </>
             )}
+          </Container>
+        ) : mode === "result" ? (
+          <Container
+            style={{
+              alignItems: "flex-end",
+              padding: 10,
+              flexDirection: "row",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Title>소요 시간</Title>
+            <Title style={{ fontSize: 20, marginLeft: 15 }}>도보 {result.time}분</Title>
+            <img src={WalkIcon} alt='걷기' style={{marginBottom: 23, marginLeft: 5}} />
           </Container>
         ) : (
           <Container>
@@ -288,9 +315,7 @@ export default function Map() {
               }}
             >
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder search={!!end}>
-                {end ? end : "도착지"}
-              </Placeholder>
+              <Placeholder search={!!end}>{end ? end : "도착지"}</Placeholder>
             </SearchWrapper>
             <SearchWrapper
               style={{

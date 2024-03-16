@@ -17,8 +17,8 @@ const Locations = () => {
 
     function error(){
       setLocation({
-        latitude: 37.483034,
-        longitude: 126.902435
+        latitude: 37.559716,
+        longitude: 126.945468
       })
       console.log("위치 받기 실패");
     }

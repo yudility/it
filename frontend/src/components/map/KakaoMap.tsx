@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, MutableRefObject } from "react";
+import React, { useEffect, useState, useRef, MutableRefObject, useMemo } from "react";
 import Locations from "./Locations";
 import { positions } from "../../data/Positions";
 import useKakaoLoader from "./useKakaoLoader";
@@ -6,28 +6,22 @@ import { Map, MapMarker, Polyline, MapTypeId } from "react-kakao-maps-sdk";
 import CurrentIcon from "../../assets/Current.svg";
 import MarkerIcon from "../../assets/Marker.svg";
 
-interface marker {
-  position: {
-    lat: number;
-    lng: number;
-  };
-  content: string;
-}
-
-export default function KakaoMap({ search }: { search: string }) {
+export default function KakaoMap({ result }: {result: string}) {
   useKakaoLoader();
   const location: any = Locations();
   const [map, setMap] = useState<kakao.maps.Map>();
-  const [info, setInfo] = useState<marker>();
-  const [markers, setMarkers] = useState<marker[]>([
-    {
-      position: {
-        lat: 36.7,
-        lng: 123.7,
-      },
-      content: "",
-    },
-  ]);
+
+  useEffect(() => {
+    if (result === 'result') resetBounds(positions)
+  }, [result])
+  
+  const resetBounds = (data: any) => {
+    const bounds = new kakao.maps.LatLngBounds();
+    for (var i = 0; i < data.length; i++) {
+      bounds.extend(new kakao.maps.LatLng(data[i].latlng.lat, data[i].latlng.lng))
+    }
+    map!.setBounds(bounds)
+  }
 
   return (
     <>
@@ -86,7 +80,7 @@ export default function KakaoMap({ search }: { search: string }) {
                     },
                   }}
                 >
-                  <div>
+                  <div style={{fontFamily: 'PretendardVariable'}}>
                     {position.info}
                   </div>
                 </MapMarker>

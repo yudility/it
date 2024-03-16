@@ -26,6 +26,7 @@ const SearchInput = styled.input`
   font-size: 16px;
   border-color: transparent;
   background: transparent;
+  font-family: PretendardVariable;
 `;
 
 const IconButton = styled.img`

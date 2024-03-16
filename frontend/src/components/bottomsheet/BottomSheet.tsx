@@ -3,16 +3,18 @@ import { useState, useEffect } from "react";
 import * as S from "./BottomSheet.style";
 import Header from "./Header";
 
-const BottomSheet = ({ children, searchMode }: any) => {
+const BottomSheet = ({ children, mode }: { children: any; mode: string; }) => {
   const { onDragEnd, controls } = useBottomSheet();
   const [height, setHeight] = useState<number>(350);
   useEffect(() => {
-    if (searchMode) {
+    if (mode === 'onSearch') {
       setHeight(0);
-    } else {
+    } else if (mode === 'beforeSearch') {
+      setHeight(350);
+    } else if (mode === 'result') {
       setHeight(350);
     }
-  }, [searchMode]);
+  }, [mode]);
 
   useEffect(() => {
     // height 상태가 변경될 때마다 애니메이션을 다시 시작

@@ -27,6 +27,8 @@ const ItemText = styled.text`
   text-align: start;
   font-size: 16px;
   padding: 10px;
+  font-weight: 500;
+  font-family: PretendardVariable;
 `
 
 const data = [

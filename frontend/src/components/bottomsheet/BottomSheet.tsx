@@ -41,7 +41,7 @@ const BottomSheet = ({ children, searchMode }: any) => {
         visible: { y: height },
         hidden: { y: "100%" },
       }}
-      dragConstraints={{ top: 0 }}
+      dragConstraints={{ top: 100 }}
       dragElastic={0.2}
     >
       <Header />

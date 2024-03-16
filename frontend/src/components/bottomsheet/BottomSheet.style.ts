@@ -6,7 +6,7 @@ import { BOTTOM_SHEET_HEIGHT } from "../../constants/Constants";
 const Wrapper = styled(motion.div)`
   flex-direction: column;
   position: fixed;
-  z-index: 10;
+  z-index: 1;
   top: 20vh;
   left: 0;
   right: 0;

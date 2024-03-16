@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import KakaoMap from "../components/map/KakaoMap";
 import SearchBar from "../components/search/SearchBar";
 import BottomSheet from "../components/bottomsheet/BottomSheet";
@@ -59,6 +59,8 @@ export default function Map() {
   const [title, setTitle] = useState<string>('');
   const [start, setStart] = useState<string>('');
   const [dest, setDest] = useState<string>('');
+  
+  const [result, setResult] = useState<boolean>(false);
 
   return (
     <>
@@ -95,7 +97,7 @@ export default function Map() {
             </SearchWrapper>
             <SearchWrapper
               style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#00664F', color: 'white', fontSize: 16, fontWeight: '700'}}
-              onClick={() => {/*경로 찾기 요청 함수*/}}>
+              onClick={() => {}}>
               경로 찾기
             </SearchWrapper>
           </Container>

@@ -22,8 +22,5 @@ public class Vertex {
     @JoinColumn(name ="building_id")
     private Building building;
 
-    public String getIdAsString() {
-        return String.valueOf(id);
-    }
 
 }

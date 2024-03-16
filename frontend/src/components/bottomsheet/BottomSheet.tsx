@@ -32,7 +32,7 @@ const BottomSheet = ({ children, mode }: { children: any; mode: string; }) => {
     <S.Wrapper
       drag='y'
       onDragEnd={onDragEnd}
-      initial='hidden'
+      initial='visible'
       animate={controls}
       transition={{
         type: "spring",

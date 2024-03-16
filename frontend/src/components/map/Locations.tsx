@@ -24,7 +24,7 @@ const Locations = () => {
       });
       console.log("위치 받기 실패");
     }
-  }, [navigator.geolocation.getCurrentPosition]);
+  }, []);
 
   return location;
 };

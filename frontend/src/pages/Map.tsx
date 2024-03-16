@@ -7,6 +7,9 @@ import LocationIcon from "../assets/Location.svg";
 import CloseIcon from "../assets/Close.svg";
 import ResetIcon from "../assets/Reset.svg";
 import SearchList from "../components/search/SearchList";
+import ToCurrentIcon from '../assets/ToCurrent.svg';
+import axios from "axios";
+import Request from "../services/requests";
 
 const Container = styled.div`
   display: flex;
@@ -53,23 +56,45 @@ const Placeholder = styled.text<{ search: boolean }>`
   font-family: PretendardVariable;
 `;
 
-const OptionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  border: 1px solid;
-`;
+export interface Place {
+  id: number;
+  building: {
+    name: string;
+  }
+}
 
-const Option = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 33%;
-  height: 50px;
-`;
+export interface Route {
+  start: {
+    latitude: number;
+    longitude: number;
+    building: {
+      name: string;
+      info: string | null;
+    }
+  },
+  end: {
+    latitude: number;
+    longitude: number;
+    building: {
+      name: string;
+      info: string | null;
+    }
+  },
+  time: number,
+  vertexList: [
+    {
+      latitude: number;
+      longitude: number;
+      building: {
+        name: string;
+        info: string | null;
+      }
+    }
+  ]
+}
 
 export default function Map() {
+  const request = Request();
   const [search, setSearch] = useState<string>("");
   const onChangeSearch = (e: any) => {
     e.preventDefault();
@@ -78,10 +103,67 @@ export default function Map() {
   const [mode, setMode] = useState<string>("beforeSearch");
   const [title, setTitle] = useState<string>("");
   const [start, setStart] = useState<string>("");
-  const [dest, setDest] = useState<string>("");
+  const [end, setEnd] = useState<string>("");
+  const [toCurrent, setToCurrent] = useState<boolean>(false);
+  const [places, setPlaces] = useState<Place[]>([{
+    id: 0,
+    building: {
+      name: ''
+    }
+  }]);
+  const [result, setResult] = useState<Route>({
+    start: {
+      latitude: 0,
+      longitude: 0,
+      building: {
+        name: '',
+        info: null
+      }
+    },
+    end: {
+      latitude: 0,
+      longitude: 0,
+      building: {
+        name: '',
+        info: null
+      }
+    },
+    time: 0,
+    vertexList: [
+      {
+        latitude: 0,
+        longitude: 0,
+        building: {
+          name: '',
+          info: null
+        }
+      }
+    ]
+  });
+
+  const searchByName = async () => {
+    const response = await request.get('point/find', {
+      name: search
+    });
+    setPlaces(response.data);
+  }
+
+  useEffect(() => {
+    if(search.length > 0) searchByName();
+  }, [search])
+
+  const findRoute = async () => {
+    const response = await request.get('route/find', {
+      start: start,
+      end: end
+    });
+    setMode('result');
+    setResult(response.data);
+  }
 
   return (
     <>
+      <img src={ToCurrentIcon} alt='현위치로' style={{position: 'absolute', zIndex: 2, bottom: 30, right: 30}} onClick={() => {setToCurrent(true); setMode('beforeSearch')}} />
       {mode === "result" && (
         <Container
           style={{
@@ -110,7 +192,7 @@ export default function Map() {
             >
               <img src={LocationIcon} alt='현위치' />
               <Placeholder search={true}>
-                출발지: {"이화여자대학교 정문"}
+                출발지: {start}
               </Placeholder>
             </SearchWrapper>
             <SearchWrapper
@@ -122,7 +204,7 @@ export default function Map() {
             >
               <img src={LocationIcon} alt='현위치' />
               <Placeholder search={true}>
-                도착지: {"이화여자대학교 후문"}
+                도착지: {end}
               </Placeholder>
             </SearchWrapper>
           </div>
@@ -131,7 +213,7 @@ export default function Map() {
               setMode("beforeSearch");
               setSearch("");
               setStart("");
-              setDest("");
+              setEnd("");
             }}
             style={{ marginTop: 20 }}
             src={ResetIcon}
@@ -139,7 +221,7 @@ export default function Map() {
           />
         </Container>
       )}
-      <KakaoMap result={mode} />
+      <KakaoMap mode={mode} result={result} toCurrent={toCurrent} />
       <BottomSheet mode={mode}>
         {mode === "onSearch" ? (
           <Container>
@@ -160,7 +242,7 @@ export default function Map() {
             />
             {search.length > 0 && (
               <>
-                <SearchList search={search} setSearch={setSearch} />
+                <SearchList search={search} setSearch={setSearch} places={places} />
                 <SearchWrapper
                   style={{
                     position: "absolute",
@@ -173,7 +255,7 @@ export default function Map() {
                     fontWeight: "700",
                   }}
                   onClick={() => {
-                    title === "출발지" ? setStart(search) : setDest(search);
+                    title === "출발지" ? setStart(search) : setEnd(search);
                     setSearch("");
                     setMode("beforeSearch");
                   }}
@@ -206,8 +288,8 @@ export default function Map() {
               }}
             >
               <img src={LocationIcon} alt='현위치' />
-              <Placeholder search={!!dest}>
-                {dest ? dest : "도착지"}
+              <Placeholder search={!!end}>
+                {end ? end : "도착지"}
               </Placeholder>
             </SearchWrapper>
             <SearchWrapper
@@ -219,9 +301,7 @@ export default function Map() {
                 fontSize: 16,
                 fontWeight: "700",
               }}
-              onClick={() => {
-                setMode("result");
-              }}
+              onClick={findRoute}
             >
               경로 찾기
             </SearchWrapper>

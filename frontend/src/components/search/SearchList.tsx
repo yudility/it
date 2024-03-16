@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 import CheckIcon from "../../assets/Check.svg";
+import { Place } from "../../pages/Map";
 
 const Container = styled.div`
   display: flex;
@@ -31,26 +32,21 @@ const ItemText = styled.text`
   font-family: PretendardVariable;
 `;
 
-const data = [
-  "이화여자대학교 학생문화관",
-  "이화여자대학교 아산공학관",
-  "이화여자대학교 대강당",
-  "이화여자대학교 포스코관",
-];
-
 interface SearchListProps {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  places: Place[];
 }
 
-export default function SearchList({ search, setSearch }: SearchListProps) {
+export default function SearchList({ search, setSearch, places }: SearchListProps) {
+  console.log(places)
   return (
     <Container>
-      {data.map((item, index) => {
+      {places.length > 0 && places.map(({id, building}: any) => {
         return (
-          <TextWrapper key={index} onClick={() => setSearch(item)}>
-            <ItemText>{item}</ItemText>
-            {search === item && <img src={CheckIcon} alt='체크' />}
+          <TextWrapper key={id} onClick={() => setSearch(building.name)}>
+            <ItemText>{building.name}</ItemText>
+            {search === building.name && <img src={CheckIcon} alt='체크' />}
           </TextWrapper>
         );
       })}

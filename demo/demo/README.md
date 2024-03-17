@@ -41,26 +41,24 @@
 ```
 
 
-## ERD
+## ER Diagram
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/97d8b7b1-43ee-41b6-b3bc-a7c4b63f041e/11209880-b8b6-48b4-a96a-62b67cee99ae/Untitled.png)
+<img width="593" alt="image" src="https://github.com/yudility/it/assets/78692557/130f5a39-586b-4fde-b0a2-a8689338fbda">
+
+
 
 ## API
-
----
-
-## 1. 이름으로 건물 조회
+### 1. 이름으로 건물 조회
 
 ### `point/find?name = “건물이름”`
 
 - 파라미터
-    - (String) name : 건물명
+> - (String) name : 건물명
 - 리턴값
-    - Vertex 객체 list
+> - Vertex 객체 list
 
-<  조회 성공 시> 
-
-- localhost:8080/point/find?name=tes
+- 조회 성공 시
+>   localhost:8080/point/find?name=tes
 
 ```json
 [
@@ -100,9 +98,8 @@
 ]
 ```
 
-조회 실패 시
-
-localhost:8080/point/find?name=ji
+- 조회 실패 시
+> localhost:8080/point/find?name=ji
 
 ```java
 []
@@ -113,30 +110,30 @@ localhost:8080/point/find?name=ji
 ### `route/find?start = "출발지건물명" & end ="도착지건물명"`
 
 - 파라미터
-    - (String) start :  출발지 건물명
-    - (String) end : 도착지 건물명
+>    - (String) start :  출발지 건물명
+>    - (String) end : 도착지 건물명
 - 리턴값
-    - Start 출발지
-        - vertex id
-        - latitude : 위도
-        - longitude : 경도
-        - building : 건물
-            - id : 건물 ID
-            - name : 건물명
-            - info : 정보
-    - End 도착지
-        - 이름
-        - 위도
-        - 경도
-        - 건물
-            - 건물 ID
-            - 건물명
-            - 정보
-    - vertexList 좌표(점) List
-        - vertex id
-        - latitude 위도
-        - longitude 경도
-        - building 건물
-            - id 건물 ID
-            - name 건물명
-            - info 정보
+>    - Start 출발지
+>        - vertex id
+>        - latitude : 위도
+>        - longitude : 경도
+>        - building : 건물
+>            - id : 건물 ID
+>            - name : 건물명
+>            - info : 정보
+>    - End 도착지
+>        - 이름
+>        - 위도
+>        - 경도
+>        - 건물
+>            - 건물 ID
+>            - 건물명
+>            - 정보
+>    - vertexList 좌표(점) List
+>        - vertex id
+>        - latitude 위도
+>        - longitude 경도
+>        - building 건물
+>            - id 건물 ID
+>            - name 건물명
+>            - info 정보

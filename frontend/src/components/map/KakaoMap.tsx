@@ -60,7 +60,7 @@ export default function KakaoMap({
           }}
           style={{
             width: "100%",
-            height: "100vh",
+            height: "95vh"
           }}
           level={3}
           onCreate={setMap}
@@ -106,7 +106,7 @@ export default function KakaoMap({
                         }}
                       />
                     )}
-                    {vertex.building !== null &&
+                    {/* {vertex.building !== null &&
                       vertex.building!.info !== null && (
                         <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
                           position={{
@@ -131,7 +131,7 @@ export default function KakaoMap({
                             <span className='right'></span>
                           </div>
                         </CustomOverlayMap>
-                      )}
+                      )} */}
                   </>
                 );
               })}

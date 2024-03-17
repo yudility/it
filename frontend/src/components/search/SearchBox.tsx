@@ -250,7 +250,7 @@ export const RouteResult = ({ result, option, onOption }: RouteResultProps) => {
         alt='옵션'
         style={{ marginBottom: 6, marginLeft: 10, marginRight: 50 }}
       />
-      <button
+      {/* <button
         onClick={onOption}
         style={{
           background: '#00664F',
@@ -266,7 +266,7 @@ export const RouteResult = ({ result, option, onOption }: RouteResultProps) => {
         }}
       >
         {option === "도보" ? "셔틀" : "도보"}
-      </button>
+      </button> */}
     </Container>
   );
 };

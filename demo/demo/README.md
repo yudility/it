@@ -137,3 +137,174 @@
 >            - id 건물 ID
 >            - name 건물명
 >            - info 정보
+
+```json
+{
+    "start": {
+        "id": 1,
+        "latitude": 37.55926864600008,
+        "longitude": 126.9457978910001,
+        "building": {
+            "id": 1,
+            "name": "정문",
+            "info": null
+        }
+    },
+    "end": {
+        "id": 146,
+        "latitude": 37.56645861900006,
+        "longitude": 126.94844940400003,
+        "building": {
+            "id": 62,
+            "name": "아산공학관",
+            "info": null
+        }
+    },
+    "vertexList": [
+        {
+            "id": 1,
+            "latitude": 37.55926864600008,
+            "longitude": 126.9457978910001,
+            "building": {
+                "id": 1,
+                "name": "정문",
+                "info": null
+            }
+        },
+        {
+            "id": 2,
+            "latitude": 37.56001399500008,
+            "longitude": 126.94567690500003,
+            "building": null
+        },
+        {
+            "id": 84,
+            "latitude": 37.561321933000045,
+            "longitude": 126.94679141100005,
+            "building": null
+        },
+        {
+            "id": 85,
+            "latitude": 37.56169943800006,
+            "longitude": 126.94729475100007,
+            "building": null
+        },
+        {
+            "id": 87,
+            "latitude": 37.561901404000025,
+            "longitude": 126.94743096700006,
+            "building": null
+        },
+        {
+            "id": 86,
+            "latitude": 37.562160608000056,
+            "longitude": 126.94700962400009,
+            "building": null
+        },
+        {
+            "id": 55,
+            "latitude": 37.56233325900007,
+            "longitude": 126.94714351400012,
+            "building": null
+        },
+        {
+            "id": 54,
+            "latitude": 37.56289048100007,
+            "longitude": 126.94735530800006,
+            "building": null
+        },
+        {
+            "id": 53,
+            "latitude": 37.56311035900006,
+            "longitude": 126.94730913300009,
+            "building": null
+        },
+        {
+            "id": 56,
+            "latitude": 37.563318897000045,
+            "longitude": 126.94783952700004,
+            "building": null
+        },
+        {
+            "id": 57,
+            "latitude": 37.56364550700005,
+            "longitude": 126.94814407000001,
+            "building": null
+        },
+        {
+            "id": 58,
+            "latitude": 37.563813226000036,
+            "longitude": 126.94800724600009,
+            "building": null
+        },
+        {
+            "id": 59,
+            "latitude": 37.56391032700003,
+            "longitude": 126.94794545500008,
+            "building": null
+        },
+        {
+            "id": 115,
+            "latitude": 37.563993793000066,
+            "longitude": 126.94785120100005,
+            "building": {
+                "id": 58,
+                "name": "종합과학관 A동",
+                "info": null
+            }
+        },
+        {
+            "id": 114,
+            "latitude": 37.564334305000045,
+            "longitude": 126.94746116100009,
+            "building": {
+                "id": 59,
+                "name": "종합과학관 B동",
+                "info": null
+            }
+        },
+        {
+            "id": 141,
+            "latitude": 37.56427751000007,
+            "longitude": 126.94780991800008,
+            "building": null
+        },
+        {
+            "id": 150,
+            "latitude": 37.56467861600004,
+            "longitude": 126.94809438700008,
+            "building": null
+        },
+        {
+            "id": 148,
+            "latitude": 37.56489176100007,
+            "longitude": 126.94797305500003,
+            "building": null
+        },
+        {
+            "id": 147,
+            "latitude": 37.56511690100007,
+            "longitude": 126.94801810900003,
+            "building": null
+        },
+        {
+            "id": 145,
+            "latitude": 37.56629442600007,
+            "longitude": 126.94875809000007,
+            "building": null
+        },
+        {
+            "id": 146,
+            "latitude": 37.56645861900006,
+            "longitude": 126.94844940400003,
+            "building": {
+                "id": 62,
+                "name": "아산공학관",
+                "info": null
+            }
+        }
+    ],
+    "innerVertices": null,
+    "minutes": 12
+}
+```

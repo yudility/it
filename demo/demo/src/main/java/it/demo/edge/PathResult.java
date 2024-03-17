@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PathResult {
-
     Vertex start;
     Vertex end;
     List<Vertex> VertexList;

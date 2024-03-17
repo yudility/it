@@ -13,8 +13,7 @@ public interface EdgeRepository extends JpaRepository<Edge, Long> {
 
     Edge save(Edge edge);
     Optional<Edge> findById(Long id);
-    Optional<Vertex> findByStartVertex(Vertex startPointVertex);
-    Optional<Vertex> findByTargetVertex(Vertex TargetPointVertex);
+
     List<Edge> findAll();
 
 

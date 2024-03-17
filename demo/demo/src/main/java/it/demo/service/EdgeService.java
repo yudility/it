@@ -28,10 +28,8 @@ public class EdgeService {
         List<Vertex> vertexList=vertexRepository.findAll();
         List<Edge> edgeList=edgeRepository.findAll();
 
-        // 그래프 생성
         WeightedMultigraph<Long, CustomWeightEdge> graph=new WeightedMultigraph<>( CustomWeightEdge.class );
 
-        // 먼저 그래프에 모든 점 추가
         for (Vertex Vertex : vertexList) {
             graph.addVertex( Vertex.getId() );
         }
@@ -49,27 +47,10 @@ public class EdgeService {
                 //todo
                 //오르막 패널티반영 어떻게 할 것인가
                 // Other operations...
-            } else {
-
-                // 에러 처리히거나 스킵
             }
         }
-/*
-
-        // DB에 있는 Edge data로 그래프에 엣지 추가
-        for (Edge route : edgeList) {
-
-            CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getId(), route.getTargetVertex().getId() );
-            edge.setId( route.getId() );
-            double time= route.getDistance() / route.getSpeed();
-
-            graph.setEdgeWeight( edge,  time);
-
-        }
-*/
 
         DijkstraShortestPath<Long, CustomWeightEdge> shortestPath=new DijkstraShortestPath<>( graph );
-
 
         // 최단 경로 계산
         GraphPath<Long, CustomWeightEdge> path = shortestPath.getPath(start.getId(), end.getId());
@@ -78,8 +59,7 @@ public class EdgeService {
         List<Vertex> vertices= new ArrayList<>();
        for (Long vertexId : resultVertexList) {
             Optional<Vertex> optionalVertex = vertexRepository.findById(vertexId);
-           optionalVertex.ifPresent( vertices::add);
-            // or you can use optionalRoute.ifPresent(route -> routes.add(route));
+            optionalVertex.ifPresent( vertices::add);
         }
 
         PathResult pathResult=new PathResult( start, end, vertices, path.getWeight() );

@@ -13,14 +13,11 @@ import java.util.Optional;
 @Repository
 public interface BuildingRepository extends JpaRepository<Building, Long> {
         Building save(Building Building);
-        //Optional<Building> findById(Long id);
+
         List<Building> findByName(String name);
-        String findBuildingNameById(long buildingId);
-        List<Building> findByNameLike(String name);
+
         List<Building> findByNameContaining(String name);
 
-        @Query("SELECT v FROM Vertex v JOIN v.building b WHERE b.name LIKE %:name%")
-        List<Vertex> findVerticesByBuildingName(String name);
         List<Building> findAll();
 
 }

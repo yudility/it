@@ -20,12 +20,10 @@ public class Edge {
     @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name="start_vertex_id")
     private Vertex startVertex;
-    //public Long startPointId;
 
     @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name="target_vertex_id")
     private Vertex targetVertex;
-    //public Long targetPointId;
 
     private float distance;
 

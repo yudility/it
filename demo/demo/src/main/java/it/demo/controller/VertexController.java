@@ -40,14 +40,7 @@ public class VertexController extends HttpServlet {
             return ResponseEntity.ok( result );
         }
 
-        //
-//        List<Vertex> result = new ArrayList<>();
-//        for (Building building : buildingList) {
-//            Vertex vertex=vertexRepository.findByBuilding( building );
-//            if(vertex.is)
-//
-//            result.add(  );
-//        }
+
     }
 }
 

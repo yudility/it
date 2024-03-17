@@ -1,15 +1,22 @@
 package it.demo.controller;
 
+import it.demo.building.Building;
 import it.demo.edge.PathResult;
 import it.demo.repository.BuildingRepository;
 import it.demo.vertex.Vertex;
 import it.demo.repository.VertexRepository;
 import it.demo.service.EdgeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Optional;
+
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 public class EdgeController {
@@ -19,30 +26,38 @@ public class EdgeController {
 
     private final EdgeService edgeService;
 
-/*    @GetMapping("route")
-    public Route findRouteByIdTest(@RequestParam("id") Long id){
-        Point point1=(Point) pointRepository.findByName("test");
-        Point point2=(Point) pointRepository.findByName("test1");
+    @GetMapping("route/find")
+    public ResponseEntity<PathResult> findShortestPathByBuildingName(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
+        Building startBuilding = buildingRepository.findByName(startName).getFirst();
+        Building destinationBuilding = buildingRepository.findByName(destinationName).getFirst();
 
-        Route route = new Route();
-        route.setStartPoint( point1 );
-        route.setStartPoint( point2 );
+        Vertex start=vertexRepository.findByBuilding( startBuilding ).getFirst();
+        Vertex end=vertexRepository.findByBuilding( destinationBuilding ).getFirst();
 
-        route.setTimes(5);
+        PathResult path=edgeService.findPath( start, end );
 
-        return route;
-    }*/
-    @GetMapping("edge/find")
-    public PathResult findShortestPath(@RequestParam("start") String startName, @RequestParam("end") String destinationName){
-
-        Vertex start = buildingRepository.findVerticesByBuildingName( startName ).getFirst();
-        Vertex end = buildingRepository.findVerticesByBuildingName( destinationName ).getFirst();
-
-        PathResult pathResult = edgeService.findPath( start, end );
-
-        return pathResult;
-
+        if ( path!=null) {
+            return ResponseEntity.ok( path );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    @GetMapping("routeBus/find")
+    public ResponseEntity<PathResult> findShortestPathByBuildingNameWithBus(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
+        Building startBuilding = buildingRepository.findByName(startName).getFirst();
+        Building destinationBuilding = buildingRepository.findByName(destinationName).getFirst();
+
+        Vertex start=vertexRepository.findByBuilding( startBuilding ).getFirst();
+        Vertex end=vertexRepository.findByBuilding( destinationBuilding ).getFirst();
+
+        PathResult path=edgeService.findPath( start, end );
+
+        if ( path!=null) {
+            return ResponseEntity.ok( path );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

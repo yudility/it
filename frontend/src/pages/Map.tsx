@@ -16,34 +16,64 @@ const Header = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: #00664F;
+  background: #00664f;
 `;
 
 export interface Building {
+  id: number;
   name: string;
   info: string | null;
 }
 
+export interface Place {
+  building: Building | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+}
+
 export interface Route {
+  start: Place;
+  end: Place;
+  minutes: number;
+  vertexList: Place[];
+}
+
+export const defaultResult = {
   start: {
-    latitude: number;
-    longitude: number;
-    building: Building;
-  };
+    id: 0,
+    latitude: 0,
+    longitude: 0,
+    building: {
+      id: 0,
+      info: null,
+      name: "",
+    },
+  },
   end: {
-    latitude: number;
-    longitude: number;
-    building: Building;
-  };
-  time: number;
+    id: 0,
+    latitude: 0,
+    longitude: 0,
+    building: {
+      id: 0,
+      info: null,
+      name: "",
+    },
+  },
+  minutes: 0,
   vertexList: [
     {
-      latitude: number;
-      longitude: number;
-      building: Building;
-    }
-  ];
-}
+      id: 0,
+      latitude: 0,
+      longitude: 0,
+      building: {
+        id: 0,
+        info: null,
+        name: "",
+      },
+    },
+  ],
+};
 
 export default function Map() {
   const request = Request();
@@ -56,41 +86,19 @@ export default function Map() {
   const [title, setTitle] = useState<string>("");
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
-  const [places, setPlaces] = useState<Building[]>([
+  const [places, setPlaces] = useState<Place[]>([
     {
-      name: "",
-      info: null,
+      id: 0,
+      latitude: 0,
+      longitude: 0,
+      building: {
+        id: 0,
+        info: null,
+        name: "",
+      },
     },
   ]);
-  const [result, setResult] = useState<Route>({
-    start: {
-      latitude: 0,
-      longitude: 0,
-      building: {
-        name: "",
-        info: null,
-      },
-    },
-    end: {
-      latitude: 0,
-      longitude: 0,
-      building: {
-        name: "",
-        info: null,
-      },
-    },
-    time: 0,
-    vertexList: [
-      {
-        latitude: 0,
-        longitude: 0,
-        building: {
-          name: "",
-          info: null,
-        },
-      },
-    ],
-  });
+  const [result, setResult] = useState<Route>(defaultResult);
 
   const searchByName = async () => {
     const response = await request.get("point/find", {
@@ -141,14 +149,14 @@ export default function Map() {
             setMode("onSearch");
           }}
           onClose={() => {
-            setMode("beforeSearch");
+            setMode("toCurrent");
             setSearch("");
             setStart("");
             setEnd("");
           }}
         />
       )}
-      <KakaoMap mode={mode} result={result} />
+      <KakaoMap mode={mode} result={result} setResult={setResult} />
       <BottomSheet mode={mode} setMode={setMode}>
         {mode === "onSearch" ? (
           <OnSearch

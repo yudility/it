@@ -4,11 +4,20 @@ import * as S from "./BottomSheet.style";
 import Header from "./Header";
 import { WINDOW_HEIGHT } from "../../constants/Constants";
 
-const BottomSheet = ({ children, mode, setMode }: { children: any; mode: string, setMode: Dispatch<SetStateAction<string>> }) => {
+const BottomSheet = ({
+  children,
+  mode,
+  setMode,
+}: {
+  children: any;
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>;
+}) => {
   const { onDragEnd, controls } = useBottomSheet();
   const [height, setHeight] = useState<number>(350);
   useEffect(() => {
-    if (height === 350 && mode === "toCurrent") setMode("beforeSearch");
+    if (height === WINDOW_HEIGHT * 0.4 && mode === "toCurrent")
+      setMode("beforeSearch");
     if (mode === "onSearch") {
       setHeight(WINDOW_HEIGHT * 0.1);
     } else if (mode === "beforeSearch" || mode === "toCurrent") {

@@ -6,7 +6,7 @@ import SearchList from "./SearchList";
 import WalkIcon from "../../assets/Walk.svg";
 import { WINDOW_HEIGHT } from "../../constants/Constants";
 import SearchBar, { SearchBarProps } from "./SearchBar";
-import { Building, Route } from "../../pages/Map";
+import { Building, Place, Route } from "../../pages/Map";
 
 const Container = styled.div`
   display: flex;
@@ -40,8 +40,9 @@ const SearchWrapper = styled.button`
   border-color: transparent;
   font-family: PretendardVariable;
   &:hover {
-    background-color: skyblue;
-    color: blue;
+    background-color: #00664f;
+    color: #00664f;
+    opacity: 0.5;
   }
   cursor: pointer;
   transition: all 0.3s;
@@ -86,11 +87,15 @@ export const BeforeSearch = ({
       <Title>어디로 가시겠어요?</Title>
       <SearchWrapper onClick={onStart}>
         <img src={LocationIcon} alt='현위치' />
-        <Placeholder search={start ? true : false}>{start ? start : "출발지"}</Placeholder>
+        <Placeholder search={start ? true : false}>
+          {start ? start : "출발지"}
+        </Placeholder>
       </SearchWrapper>
       <SearchWrapper onClick={onEnd}>
         <img src={LocationIcon} alt='현위치' />
-        <Placeholder search={end ? true : false}>{end ? end : "도착지"}</Placeholder>
+        <Placeholder search={end ? true : false}>
+          {end ? end : "도착지"}
+        </Placeholder>
       </SearchWrapper>
       <SearchWrapper
         style={{
@@ -167,7 +172,7 @@ export const SearchResult = ({
 interface OnSearchProps extends SearchBarProps {
   title: string;
   onClose: () => void;
-  places: Building[];
+  places: Place[];
   onSet: () => void;
 }
 
@@ -229,13 +234,13 @@ export const RouteResult = ({ result }: { result: Route }) => {
       }}
     >
       <Title>소요 시간</Title>
-      <Title style={{ fontSize: 20, marginLeft: 15 }}>
-        도보 {result.time}분
+      <Title style={{ fontSize: 20, marginLeft: 15, marginBottom: 2 }}>
+        도보 {result.minutes}분
       </Title>
       <img
         src={WalkIcon}
         alt='걷기'
-        style={{ marginBottom: 23, marginLeft: 5 }}
+        style={{ marginBottom: 6, marginLeft: 10 }}
       />
     </Container>
   );

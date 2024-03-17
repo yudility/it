@@ -1,4 +1,12 @@
-Frontend 폴더 구조
+### 사용 스택
+- React, Typescript, Styled-Components, Kakao Map API
+
+### 주요 기능
+- 현위치 탐색
+- 교내 건물 검색
+- 교내 건물 간 길찾기
+
+### Frontend 폴더 구조
 ```bash
 .
 ├── App.tsx

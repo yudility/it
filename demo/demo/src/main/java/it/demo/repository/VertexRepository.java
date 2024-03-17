@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface VertexRepository extends JpaRepository<Vertex, Long> {
         Vertex save(Vertex Vertex);
         Optional<Vertex> findById(Long id);
-        Vertex findByBuilding(Building building);
+        List<Vertex> findByBuilding(Building building);
         List<Vertex> findAll();
 
 }

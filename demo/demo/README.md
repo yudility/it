@@ -138,6 +138,8 @@
 >            - name 건물명
 >            - info 정보
 
+- 조회 성공 시
+> localhost:8080/route/find?start=정문&end=아산공학관
 ```json
 {
     "start": {

@@ -9,12 +9,13 @@ import jakarta.servlet.http.HttpServlet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 public class VertexController extends HttpServlet {
@@ -25,17 +26,28 @@ public class VertexController extends HttpServlet {
 
     @GetMapping("point/find")
     public ResponseEntity<Object> findPointByName(@RequestParam("name") String name) {
-        List<Building> buildingList = buildingRepository.findByNameContaining( name );
+        List<Building> buildingList=buildingRepository.findByNameContaining( name );
         if (buildingList == null) {
-            return ResponseEntity.status( HttpStatus.NOT_FOUND).body("No points found for the given name");
+            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "No points found for the given name" );
+        }
+        else {
+            List<Vertex> result=new ArrayList<>();
+            for (Building building : buildingList) {
+                List<Vertex> vertices= vertexRepository.findByBuilding( building );
+                if (vertices != null)
+                    result.addAll( vertices );
+            }
+            return ResponseEntity.ok( result );
         }
 
-        List<Vertex> result = new ArrayList<>();
-        for (Building building : buildingList) {
-            result.add( vertexRepository.findByBuilding( building ) );
-        }
-
-        return ResponseEntity.ok(result);
+        //
+//        List<Vertex> result = new ArrayList<>();
+//        for (Building building : buildingList) {
+//            Vertex vertex=vertexRepository.findByBuilding( building );
+//            if(vertex.is)
+//
+//            result.add(  );
+//        }
     }
-
 }
+

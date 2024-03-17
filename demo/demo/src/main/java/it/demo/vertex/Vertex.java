@@ -18,7 +18,7 @@ public class Vertex {
 
     private double latitude;
     private double longitude;
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne(cascade=CascadeType.REMOVE)
     @JoinColumn(name ="building_id")
     private Building building;
 

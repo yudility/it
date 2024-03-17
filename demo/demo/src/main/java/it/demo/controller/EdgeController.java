@@ -7,6 +7,7 @@ import it.demo.repository.VertexRepository;
 import it.demo.service.EdgeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 public class EdgeController {
@@ -52,7 +54,7 @@ public class EdgeController {
         }
 
     }*/
-    @GetMapping("edge/find")
+    @GetMapping("route/find")
     public ResponseEntity<PathResult> findShortestPath(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
         List<Vertex> startVertices=buildingRepository.findVerticesByBuildingName( startName );
         List<Vertex> endVertices=buildingRepository.findVerticesByBuildingName( destinationName );

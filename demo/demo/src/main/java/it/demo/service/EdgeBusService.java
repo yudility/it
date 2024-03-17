@@ -1,14 +1,12 @@
 package it.demo.service;
 
-import it.demo.building.Building;
+import it.demo.edge.CustomWeightEdge;
+import it.demo.edge.Edge;
+import it.demo.edge.PathResult;
+import it.demo.repository.EdgeRepository;
+import it.demo.repository.VertexRepository;
 import it.demo.vertex.InnerVertex;
 import it.demo.vertex.Vertex;
-import it.demo.repository.VertexRepository;
-import it.demo.repository.EdgeRepository;
-import it.demo.edge.CustomWeightEdge;
-import it.demo.edge.PathResult;
-import it.demo.edge.Edge;
-
 import lombok.RequiredArgsConstructor;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -21,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class EdgeService {
+public class EdgeBusService {
 
     private final VertexRepository vertexRepository;
     private final EdgeRepository edgeRepository;

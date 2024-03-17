@@ -13,4 +13,5 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 @NoArgsConstructor
 public class CustomWeightEdge extends DefaultWeightedEdge {
     private Long id;
+    private boolean isBus;
 }

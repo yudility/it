@@ -28,8 +28,25 @@ public class EdgeController {
 
     @GetMapping("route/find")
     public ResponseEntity<PathResult> findShortestPathByBuildingName(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
-        Building startBuilding = buildingRepository.findByName( startName).getFirst();
-        Building destinationBuilding = buildingRepository.findByName( destinationName ).getFirst();
+        Building startBuilding = buildingRepository.findByName(startName).getFirst();
+        Building destinationBuilding = buildingRepository.findByName(destinationName).getFirst();
+
+        Vertex start=vertexRepository.findByBuilding( startBuilding ).getFirst();
+        Vertex end=vertexRepository.findByBuilding( destinationBuilding ).getFirst();
+
+        PathResult path=edgeService.findPath( start, end );
+
+        if ( path!=null) {
+            return ResponseEntity.ok( path );
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("routeBus/find")
+    public ResponseEntity<PathResult> findShortestPathByBuildingNameWithBus(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
+        Building startBuilding = buildingRepository.findByName(startName).getFirst();
+        Building destinationBuilding = buildingRepository.findByName(destinationName).getFirst();
 
         Vertex start=vertexRepository.findByBuilding( startBuilding ).getFirst();
         Vertex end=vertexRepository.findByBuilding( destinationBuilding ).getFirst();

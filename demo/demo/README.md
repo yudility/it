@@ -1,5 +1,5 @@
 ## Backend 파일 구조
-
+```
 📦src
  ┣ 📂main
  ┃ ┣ 📂java
@@ -38,3 +38,4 @@
  ┃ ┃ ┃ ┃ ┃ ┗ 📜findRouteServiceTest.java
  ┃ ┃ ┃ ┃ ┣ 📂domain
  ┃ ┃ ┃ ┃ ┗ 📜DemoApplicationTests.java
+```

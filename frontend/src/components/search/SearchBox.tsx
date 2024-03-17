@@ -4,6 +4,7 @@ import CloseIcon from "../../assets/Close.svg";
 import ResetIcon from "../../assets/Reset.svg";
 import SearchList from "./SearchList";
 import WalkIcon from "../../assets/Walk.svg";
+import BusIcon from "../../assets/Bus.svg";
 import { WINDOW_HEIGHT } from "../../constants/Constants";
 import SearchBar, { SearchBarProps } from "./SearchBar";
 import { Building, Place, Route } from "../../pages/Map";
@@ -223,25 +224,49 @@ export const OnSearch = ({
   );
 };
 
-export const RouteResult = ({ result }: { result: Route }) => {
+interface RouteResultProps {
+  result: Route;
+  option: string;
+  onOption: () => void;
+}
+
+export const RouteResult = ({ result, option, onOption }: RouteResultProps) => {
   return (
     <Container
       style={{
         alignItems: "flex-end",
         padding: 10,
+        paddingInline: 20,
         flexDirection: "row",
         justifyContent: "flex-start",
       }}
     >
       <Title>소요 시간</Title>
       <Title style={{ fontSize: 20, marginLeft: 15, marginBottom: 2 }}>
-        도보 {result.minutes}분
+        {option + " " + result.minutes}분
       </Title>
       <img
-        src={WalkIcon}
-        alt='걷기'
-        style={{ marginBottom: 6, marginLeft: 10 }}
+        src={option === "도보" ? WalkIcon : BusIcon}
+        alt='옵션'
+        style={{ marginBottom: 6, marginLeft: 10, marginRight: 50 }}
       />
+      <button
+        onClick={onOption}
+        style={{
+          background: '#00664F',
+          borderColor: 'transparent',
+          height: 35,
+          width: 80,
+          borderRadius: 12,
+          fontFamily: 'PretendardVariable',
+          fontSize: 16,
+          color: 'white',
+          fontWeight: 700,
+          flex: 1
+        }}
+      >
+        {option === "도보" ? "셔틀" : "도보"}
+      </button>
     </Container>
   );
 };

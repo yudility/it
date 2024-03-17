@@ -99,6 +99,7 @@ export default function Map() {
     },
   ]);
   const [result, setResult] = useState<Route>(defaultResult);
+  const [option, setOption] = useState<string>('도보');
 
   const searchByName = async () => {
     const response = await request.get("point/find", {
@@ -176,7 +177,7 @@ export default function Map() {
             }}
           />
         ) : mode === "afterSearch" ? (
-          <RouteResult result={result} />
+          <RouteResult result={result} option={option} onOption={() => setOption(option === '도보' ? '셔틀' : '도보')} />
         ) : (
           <BeforeSearch
             start={start}

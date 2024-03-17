@@ -1,19 +1,29 @@
 import useBottomSheet from "../../hooks/useBottomSheet";
-import { useState, useEffect, useRef, SetStateAction, Dispatch } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import * as S from "./BottomSheet.style";
 import Header from "./Header";
+import { WINDOW_HEIGHT } from "../../constants/Constants";
 
-const BottomSheet = ({ children, mode, setMode }: { children: any; mode: string, setMode: Dispatch<SetStateAction<string>> }) => {
+const BottomSheet = ({
+  children,
+  mode,
+  setMode,
+}: {
+  children: any;
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>;
+}) => {
   const { onDragEnd, controls } = useBottomSheet();
   const [height, setHeight] = useState<number>(350);
   useEffect(() => {
-    if (height === 350 && mode === "toCurrent") setMode("beforeSearch");
+    if (height === WINDOW_HEIGHT * 0.4 && mode === "toCurrent")
+      setMode("beforeSearch");
     if (mode === "onSearch") {
-      setHeight(0);
+      setHeight(WINDOW_HEIGHT * 0.1);
     } else if (mode === "beforeSearch" || mode === "toCurrent") {
-      setHeight(350);
-    } else if (mode === "result") {
-      setHeight(580);
+      setHeight(WINDOW_HEIGHT * 0.4);
+    } else if (mode === "afterSearch") {
+      setHeight(WINDOW_HEIGHT * 0.65);
     }
   }, [mode]);
 

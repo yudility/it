@@ -5,7 +5,9 @@ const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'PretendardVariable';
     font-style: normal;
-    src: url(${PretendardVariable}) format('truetype');
+    font-display: swap;
+    src: url(${PretendardVariable}) format('woff2'),
+        local('PretendardVariable')
   }
 `
 

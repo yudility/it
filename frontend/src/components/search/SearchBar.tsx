@@ -6,11 +6,12 @@ const Wrapper = styled.div`
   display: flex;
   width: 327px;
   padding: 10px 16px;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: 10px;
   border-radius: 12px;
   background: #f8f8f8;
+  margin-top: 10px;
 `;
 
 const SearchInput = styled.input`
@@ -30,12 +31,10 @@ const SearchInput = styled.input`
 `;
 
 const IconButton = styled.img`
-  position: absolute;
-  top: 135px;
-  z-index: 10;
+  z-index: 2;
 `;
 
-interface SearchBarProps {
+export interface SearchBarProps {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
   onChangeSearch: any;
@@ -55,7 +54,6 @@ export default function SearchBar({
       />
       {search.length > 0 && (
         <IconButton
-          style={{ right: 50 }}
           src={CancelIcon}
           alt='취소'
           onClick={() => setSearch("")}

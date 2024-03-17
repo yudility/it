@@ -1,18 +1,13 @@
 import React, {
   useEffect,
   useState,
-  useRef,
-  MutableRefObject,
-  useMemo,
 } from "react";
 import Locations from "./Locations";
-import styled from "styled-components";
-import useKakaoLoader from "./useKakaoLoader";
+import useKakaoLoader from "../../hooks/useKakaoLoader";
 import {
   Map,
   MapMarker,
   Polyline,
-  MapTypeId,
   CustomOverlayMap,
 } from "react-kakao-maps-sdk";
 import CurrentIcon from "../../assets/Current.svg";
@@ -29,7 +24,7 @@ export default function KakaoMap({ mode, result }: { mode: string; result: Route
   const [map, setMap] = useState<kakao.maps.Map>();
 
   useEffect(() => {
-    if (mode === "result") {
+    if (mode === "afterSearch") {
       resetBounds(path);
     } else if (mode === "toCurrent") {
       map!.setCenter(new kakao.maps.LatLng(location.latitude, location.longitude));

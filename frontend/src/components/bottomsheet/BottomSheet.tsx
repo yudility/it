@@ -23,7 +23,7 @@ const BottomSheet = ({
     } else if (mode === "beforeSearch" || mode === "toCurrent") {
       setHeight(WINDOW_HEIGHT * 0.4);
     } else if (mode === "afterSearch") {
-      setHeight(580);
+      setHeight(WINDOW_HEIGHT * 0.65);
     }
   }, [mode]);
 

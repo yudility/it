@@ -29,7 +29,7 @@ public class Edge {
 
     private float distance;
 
-    private double speed;
+    private double time;
 
     //가중치를 어떻게 할지 생각해보기
 

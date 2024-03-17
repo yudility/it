@@ -6,10 +6,10 @@ import it.demo.repository.EdgeRepository;
 import it.demo.edge.CustomWeightEdge;
 import it.demo.edge.PathResult;
 import it.demo.edge.Edge;
+
 import lombok.RequiredArgsConstructor;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.graph.WeightedMultigraph;
 import org.springframework.stereotype.Service;
 
@@ -35,20 +35,38 @@ public class EdgeService {
         for (Vertex Vertex : vertexList) {
             graph.addVertex( Vertex.getId() );
         }
+        for (Edge edge : edgeList) {
+            Vertex startVertex = edge.getStartVertex();
+            Vertex targetVertex =edge.getTargetVertex();
+
+            if (startVertex != null && targetVertex != null) {
+                CustomWeightEdge customWeightEdge = graph.addEdge( startVertex.getId(), targetVertex.getId() );
+                customWeightEdge.setId( edge.getId() );
+//                double time= edge.getDistance() / edge.getSpeed();
+                graph.setEdgeWeight( customWeightEdge, edge.getDistance() );
+                //todo
+                //가중치를 어떻게 둘것인가 -> 시간?
+                //todo
+                //오르막 패널티반영 어떻게 할 것인가
+                // Other operations...
+            } else {
+
+                // 에러 처리히거나 스킵
+            }
+        }
+/*
 
         // DB에 있는 Edge data로 그래프에 엣지 추가
         for (Edge route : edgeList) {
+
             CustomWeightEdge edge=graph.addEdge( route.getStartVertex().getId(), route.getTargetVertex().getId() );
             edge.setId( route.getId() );
             double time= route.getDistance() / route.getSpeed();
 
             graph.setEdgeWeight( edge,  time);
-            //todo
-            //가중치를 어떻게 둘것인가
-            //시간?
-            //todo
-            //오르막 패널티반영 어떻게 할 것인가
+
         }
+*/
 
         DijkstraShortestPath<Long, CustomWeightEdge> shortestPath=new DijkstraShortestPath<>( graph );
 

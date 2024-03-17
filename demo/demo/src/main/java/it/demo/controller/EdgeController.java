@@ -1,5 +1,6 @@
 package it.demo.controller;
 
+import it.demo.building.Building;
 import it.demo.edge.PathResult;
 import it.demo.repository.BuildingRepository;
 import it.demo.vertex.Vertex;
@@ -54,21 +55,37 @@ public class EdgeController {
         }
 
     }*/
+/* ee
     @GetMapping("route/find")
     public ResponseEntity<PathResult> findShortestPath(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
         List<Vertex> startVertices=buildingRepository.findVerticesByBuildingName( startName );
         List<Vertex> endVertices=buildingRepository.findVerticesByBuildingName( destinationName );
 
-        if (startVertices != null && !startVertices.isEmpty() && endVertices != null && !endVertices.isEmpty()) {
-            Optional<Vertex> start=Optional.ofNullable( startVertices.getFirst() );
-            Optional<Vertex> end=Optional.ofNullable( endVertices.getFirst() );
+        if ( !startVertices.isEmpty() && !endVertices.isEmpty()) {
+            Vertex start=startVertices.getFirst();
+            Vertex end=endVertices.getFirst();
 
-            if (start.isPresent() && end.isPresent()) {
-                PathResult pathResult=edgeService.findPath( start.get(), end.get() );
-                return ResponseEntity.ok( pathResult );
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            PathResult pathResult=edgeService.findPath( start, end );
+            return ResponseEntity.ok( pathResult );
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+*/
+
+    @GetMapping("route/find")
+    public ResponseEntity<PathResult> findShortestPathByBuildingName(@RequestParam("start") String startName, @RequestParam("end") String destinationName) {
+        Building startBuilding = buildingRepository.findByName( startName).getFirst();
+        Building destinationBuilding = buildingRepository.findByName( destinationName ).getFirst();
+
+        Vertex start=vertexRepository.findByBuilding( startBuilding ).getFirst();
+        Vertex end=vertexRepository.findByBuilding( destinationBuilding ).getFirst();
+
+        PathResult path=edgeService.findPath( start, end );
+
+        if ( path!=null) {
+            return ResponseEntity.ok( path );
         } else {
             return ResponseEntity.notFound().build();
         }

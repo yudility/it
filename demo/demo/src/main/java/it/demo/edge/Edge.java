@@ -18,12 +18,12 @@ public class Edge {
     private Long id;
 
     @ManyToOne(cascade=CascadeType.REMOVE)
-    @JoinColumn(name="start_point_id")
+    @JoinColumn(name="start_vertex_id")
     private Vertex startVertex;
     //public Long startPointId;
 
     @ManyToOne(cascade=CascadeType.REMOVE)
-    @JoinColumn(name="target_point_id")
+    @JoinColumn(name="target_vertex_id")
     private Vertex targetVertex;
     //public Long targetPointId;
 

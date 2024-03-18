@@ -28,7 +28,6 @@ public class findRouteServiceTest {
     @Autowired
     private  EdgeService edgeService;
 
-
     @Test
     @DisplayName( "정문 -> 음악관 경로 찾기" )
     void findRoute(){

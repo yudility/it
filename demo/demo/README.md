@@ -92,18 +92,6 @@ GET /point/find?name={건물명}
 - **효율적 데이터 모델링**: 복잡한 지리 정보를 관계형 DB로 설계
 - **팀 협업 경험**: 다양한 직군과의 협업을 통한 서비스 완성
 
-## 📁 **프로젝트 구조**
-```
-src/main/java/it/demo/
-├── building/          # 건물 엔티티
-├── vertex/           # 위치 노드 엔티티  
-├── edge/             # 경로 간선 엔티티
-├── repository/       # 데이터 접근 계층
-├── service/          # 비즈니스 로직 (다익스트라 알고리즘)
-├── controller/       # REST API 컨트롤러
-└── DemoApplication.java
-```
-
 ## 🛠️ **실행 방법**
 ```bash
 # 의존성 설치 및 빌드
@@ -115,7 +103,23 @@ src/main/java/it/demo/
 
 **개발환경**: Java 21, MariaDB, Spring Boot 3.2.3
 
-## Backend 파일 구조
+## ER Diagram
+
+<img width="593" alt="image" src="https://github.com/yudility/it/assets/78692557/130f5a39-586b-4fde-b0a2-a8689338fbda">
+
+## 📁 Backend 프로젝트 구조
+
+```
+src/main/java/it/demo/
+├── building/          # 건물 엔티티
+├── vertex/           # 위치 노드 엔티티  
+├── edge/             # 경로 간선 엔티티
+├── repository/       # 데이터 접근 계층
+├── service/          # 비즈니스 로직 (다익스트라 알고리즘)
+├── controller/       # REST API 컨트롤러
+└── DemoApplication.java
+```
+
 ```
 📦src
  ┣ 📂main
@@ -156,11 +160,6 @@ src/main/java/it/demo/
  ┃ ┃ ┃ ┃ ┣ 📂domain
  ┃ ┃ ┃ ┃ ┗ 📜DemoApplicationTests.java
 ```
-
-
-## ER Diagram
-
-<img width="593" alt="image" src="https://github.com/yudility/it/assets/78692557/130f5a39-586b-4fde-b0a2-a8689338fbda">
 
 
 

@@ -163,7 +163,7 @@ src/main/java/it/demo/
 
 
 
-## API
+## API 상세 정보
 ### 1. 이름으로 건물 조회
 
 ### `point/find?name = “건물이름”`
